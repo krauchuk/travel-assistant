@@ -12,7 +12,7 @@
   }
   .entity-body {
     color: white;
-    background: rgba(black, .4);
+    background: rgba(black, .6);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     padding-right: 4px;
@@ -26,6 +26,7 @@
   border-radius: 5px;
   background: white;
   margin: 20px 0px;
+  position: relative;
   img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -40,4 +41,15 @@
   .entity-stars {
     text-align: right;
   }
+  .entity-price {
+    padding: 10px;
+  }
+}
+
+.entity-price {
+  background: orange;
+  color: white;
+  position: absolute;
+  right: 10px;
+  top: 0px;
 }

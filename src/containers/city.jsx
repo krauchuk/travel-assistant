@@ -26,12 +26,17 @@ class City extends PureComponent {
             <img className="entity-img" src={selectedCity.pic} />
             <div className="entity-description">{selectedCity.info.description}</div>
             <div>
-            <span className="header-text">Popular places</span>
-              <List
-                listType={'grid'}
-                entityType={'place'}
-                entities={selectedCity.places.popular}
-              />
+            {selectedCity.places.popular.length ?
+              <div>
+                <span className="header-text">Popular places</span>
+                <List
+                  listType={'grid'}
+                  entityType={'place'}
+                  entities={selectedCity.places.popular}
+                />
+              </div>
+              : null
+            }
               <List
                 listType={'scroll'}
                 entityType={'place'}
