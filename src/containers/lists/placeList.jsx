@@ -10,10 +10,12 @@ class PlaceList extends PureComponent {
       <div>
         Popular
         <List
+          listType={'grid'}
           entityType={type}
           entities={popularPlaces}
         />
         <List
+          listType={'scroll'}
           entityType={type}
           entities={places}
         />

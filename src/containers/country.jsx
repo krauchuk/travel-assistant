@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { fetchCountry } from '../actions/countries';
+import List from '../components/list';
 
 class Country extends PureComponent {
   componentDidMount() {
@@ -24,6 +25,25 @@ class Country extends PureComponent {
             </div>
             {selectedCountry.name}
             {selectedCountry.stars}
+            <div>
+              Popular cities
+              <List
+                listType={'grid'}
+                entityType={'city'}
+                entities={selectedCountry.cities.popular}
+              />
+              Popular places
+              <List
+                listType={'grid'}
+                entityType={'place'}
+                entities={selectedCountry.popularPlaces}
+              />
+              <List
+                listType={'scroll'}
+                entityType={'city'}
+                entities={selectedCountry.cities.all}
+              />
+            </div>
           </div>
         : <div>
             <span>Oops, we did not find the country</span>
