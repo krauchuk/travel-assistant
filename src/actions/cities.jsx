@@ -1,5 +1,5 @@
 import axios from 'axios';
-import server from './server';
+import server from '../constants/serverUrl';
 import {
   FETCH_CITIES_REQUEST,
   FETCH_CITIES_SUCCESS,
