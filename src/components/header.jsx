@@ -1,8 +1,9 @@
 import React from 'react';
+import '../scss/header.scss';
 
 const header = () => (
-  <div>
-    Travel app
+  <div className="header">
+    Travel assistant
   </div>
 );
 

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import List from '../../components/list';
+import '../../scss/text.scss';
 
 class CityList extends PureComponent {
   render() {
@@ -8,7 +9,7 @@ class CityList extends PureComponent {
     const type = 'city';
     return (
       <div>
-        Popular
+        <span className="header-text">Popular</span>
         <List
           listType={'grid'}
           entityType={type}

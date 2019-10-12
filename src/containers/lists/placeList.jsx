@@ -8,7 +8,7 @@ class PlaceList extends PureComponent {
     const { places, popularPlaces } = this.props;
     return (
       <div>
-        Popular
+        <span className="header-text">Popular</span>
         <List
           listType={'grid'}
           entityType={type}

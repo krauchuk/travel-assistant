@@ -10,9 +10,11 @@ const entity = ({
   <div className={`${listType}-list-entity`}>
     <Link to={`/${entityType}/${entity.id}`}>
       <div id={entity.id}>
-        {entity.pic}
-        {entity.name}
-        {entity.stars}
+        <img src={entity.pic} />
+        <div className="entity-body">
+          <div className="entity-header">{entity.name}</div>
+          <div className="entity-stars">&#9733;{entity.stars}</div>
+        </div>
       </div>
     </Link>
   </div>

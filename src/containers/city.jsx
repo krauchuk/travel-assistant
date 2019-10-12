@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { fetchCity } from '../actions/cities';
 import List from '../components/list';
+import '../scss/text.scss';
+import '../scss/entityPage.scss';
 
 class City extends PureComponent {
   componentDidMount() {
@@ -19,12 +21,12 @@ class City extends PureComponent {
     const { selectedCity } = this.props;
     return (
       selectedCity
-        ? <div>
-            About {selectedCity.name}
-            {selectedCity.info.description}
-            {selectedCity.stars}
+        ? <div className="entity-info">
+            <span className="entity-page-address">Home > {selectedCity.country.name} > {selectedCity.name}</span>
+            <img className="entity-img" src={selectedCity.pic} />
+            <div className="entity-description">{selectedCity.info.description}</div>
             <div>
-              Popular places
+            <span className="header-text">Popular places</span>
               <List
                 listType={'grid'}
                 entityType={'place'}

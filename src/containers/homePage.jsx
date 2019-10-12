@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import List from '../components/list';
+import '../scss/text.scss';
+import '../scss/buttons.scss';
 
 class HomePage extends PureComponent {
   render() {
@@ -12,27 +14,33 @@ class HomePage extends PureComponent {
     } = this.props;
     return (
       <div>
-        <span>Popular countries</span>
+        <span className="header-text">
+          Country <span className="header-hot-text">Hot</span>
+        </span>
+        <Link to="/country" className="more-btn">More</Link>
         <List
           listType={'grid'}
           entityType={'country'}
           entities={popularCountries}
         />
-        <Link to="/country">More</Link>
-        <span>Popular cities</span>
+        <span className="header-text">
+          City <span className="header-hot-text">Hot</span>
+        </span>
+        <Link to="/city" className="more-btn">More</Link>
         <List
           listType={'grid'}
           entityType={'city'}
           entities={popularCities}
         />
-        <Link to="/city">More</Link>
-        <span>Popular places</span>
+        <span className="header-text">
+          Place <span className="header-hot-text">Hot</span>
+        </span>
+        <Link to="/place" className="more-btn">More</Link>
         <List
           listType={'grid'}
           entityType={'place'}
           entities={popularPlaces}
         />
-        <Link to="/place">More</Link>
       </div>
     )
   }

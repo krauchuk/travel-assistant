@@ -8,7 +8,7 @@ class CountyList extends PureComponent {
     const { counties, popularCountries } = this.props;
     return (
       <div>
-        Popular
+        <span className="header-text">Popular</span>
         <List
           listType={'grid'}
           entityType={type}
