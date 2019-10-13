@@ -25,7 +25,14 @@ class Country extends PureComponent {
       selectedCountry
         ? <div>
             <span className="entity-page-address">Home > {selectedCountry.name}</span>
-            <img className="entity-img" src={selectedCountry.pic} />
+            {selectedCountry.pic ?
+              <img className="entity-img" src={selectedCountry.pic} />
+              : <div className="entity-img-not-found">
+                  <span className="entity-img-not-found-text">
+                    {'No photo :('}
+                  </span>
+                </div>
+            }
             <div className="entity-description">{selectedCountry.description}</div>
             <div>
               { selectedCountry.cities.popular.length ?

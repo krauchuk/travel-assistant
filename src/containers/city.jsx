@@ -35,7 +35,14 @@ class City extends PureComponent {
       selectedCity
         ? <div>
             <span className="entity-page-address">Home > {selectedCity.country.name} > {selectedCity.name}</span>
-            <img className="entity-img" src={selectedCity.pic} />
+            {selectedCity.pic ?
+              <img className="entity-img" src={selectedCity.pic} />
+              : <div className="entity-img-not-found">
+                  <span className="entity-img-not-found-text">
+                    {'No photo :('}
+                  </span>
+                </div>
+            }
             <div className="entity-description">{selectedCity.info.description}</div>
             <div>
             <button className="back-btn" onClick={this.toPreviousPage}>Back</button>

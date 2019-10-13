@@ -13,7 +13,7 @@ const pagination = ({
       value="prev"
       className={hasPrev ? 'pagination-btn-enabled' : 'pagination-btn-disabled'}
       onClick={clickHandle}
-      disabled={hasPrev ? false : true}
+      disabled={!hasPrev}
     >
       {'<'}
     </button>
@@ -22,7 +22,7 @@ const pagination = ({
       value="next"
       className={hasNext ? 'pagination-btn-enabled' : 'pagination-btn-disabled'}
       onClick={clickHandle}
-      disabled={hasNext ? false : true}
+      disabled={!hasNext}
     >
       {'>'}
     </button>

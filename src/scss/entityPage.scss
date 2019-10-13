@@ -43,3 +43,18 @@
   color: white;
   float: right;
 }
+
+.entity-img-not-found {
+  @extend .entity-img;
+  margin: 10px 0px;
+  background: gray;
+  height: 250px;
+  text-align: center;
+}
+
+.entity-img-not-found-text {
+  color: white;
+  position: relative;
+  font-weight: bold;
+  top: 50%;
+}

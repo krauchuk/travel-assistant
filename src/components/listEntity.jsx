@@ -10,7 +10,14 @@ const entity = ({
   <div className={`${listType}-list-entity`}>
     <Link to={`/${entityType}/${entity.id}`}>
       <div id={entity.id}>
+       {entity.pic ?
         <img src={entity.pic} />
+        : <div className="image-not-found">
+          <span className="image-not-found-text">
+            {'No photo :('}
+          </span>
+        </div>
+       }
         <div className="entity-body">
           <div className="entity-header">{entity.name}</div>
           <div className="entity-stars">&#9733;{entity.stars}</div>

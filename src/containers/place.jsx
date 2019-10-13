@@ -26,7 +26,14 @@ class Place extends PureComponent {
           <span className="entity-page-address">
             Home > {selectedPlace.country.name} > {selectedPlace.city.name} > {selectedPlace.name}
           </span>
-          <img className="entity-img" src={selectedPlace.pic} />
+          {selectedPlace.pic ?
+            <img className="entity-img" src={selectedPlace.pic} />
+            : <div className="entity-img-not-found">
+                <span className="entity-img-not-found-text">
+                  {'No photo :('}
+                </span>
+              </div>
+          }
           <div className="entity-info">
               <div className="entity-name">{selectedPlace.name}</div>
               <div className="entity-address">{selectedPlace.info.address}</div>
