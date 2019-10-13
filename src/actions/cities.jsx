@@ -7,12 +7,14 @@ import {
   FETCH_CITY_REQUEST,
   FETCH_CITY_SUCCESS,
   FETCH_CITY_FAILURE,
+  CITIES_PAGE_CHANGE,
 } from './actionTypes';
 import {
   fetchRequest,
   fetchSuccess,
   fetchFailure,
 } from './fetchActions';
+import { changeCurrentPage } from './paginationActions';
 
 const fetchCities = page => (
   (dispatch) => {
@@ -48,7 +50,14 @@ const fetchCity = id => (
   }
 );
 
+const changePage = page => (
+  (dispatch) => {
+    dispatch(changeCurrentPage(CITIES_PAGE_CHANGE, page));
+  }
+)
+
 export {
   fetchCities,
   fetchCity,
+  changePage,
 }

@@ -7,12 +7,14 @@ import {
   FETCH_COUNTRY_REQUEST,
   FETCH_COUNTRY_SUCCESS,
   FETCH_COUNTRY_FAILURE,
+  COUNTRIES_PAGE_CHANGE,
 } from './actionTypes';
 import {
   fetchRequest,
   fetchSuccess,
   fetchFailure,
 } from './fetchActions';
+import { changeCurrentPage } from './paginationActions';
 
 const fetchCountries = page => (
   (dispatch) => {
@@ -48,7 +50,14 @@ const fetchCountry = id => (
   }
 );
 
+const changePage = page => (
+  (dispatch) => {
+    dispatch(changeCurrentPage(COUNTRIES_PAGE_CHANGE, page));
+  }
+)
+
 export {
   fetchCountries,
   fetchCountry,
+  changePage,
 }

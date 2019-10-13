@@ -1,12 +1,37 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import List from '../../components/list';
+import Pagination from '../../containers/pagination';
+import {
+  changePage,
+  fetchCities,
+} from '../../actions/cities';
 import '../../scss/text.scss';
 
 class CityList extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const {
+      pagination,
+      updateCities,
+    } = this.props;
+    if (prevProps.pagination.currentPage !== pagination.currentPage) {
+      updateCities(pagination.currentPage);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  changePageFunc = (page) => {
+    const { changeCurrentPage } = this.props;
+    changeCurrentPage(page);
+  }
+
   render() {
-    const { cities, popularCities } = this.props;
     const type = 'city';
+    const {
+      cities,
+      popularCities,
+      pagination,
+     } = this.props;
     return (
       <div>
         <span className="header-text">Popular</span>
@@ -20,6 +45,10 @@ class CityList extends PureComponent {
           entityType={type}
           entities={cities}
         />
+        <Pagination
+          values={pagination}
+          changePageFunc={this.changePageFunc}
+        />
       </div>
     )
   }
@@ -28,6 +57,16 @@ class CityList extends PureComponent {
 const mapStateToProps = state => ({
   cities: state.cities.cities,
   popularCities: state.cities.popularCities,
+  pagination: state.cities.pagination,
 });
 
-export default connect(mapStateToProps)(CityList);
+const mapDispatchToProps = dispatch => ({
+  changeCurrentPage: (page) => {
+    dispatch(changePage(page));
+  },
+  updateCities: (page) => {
+    dispatch(fetchCities(page));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CityList);

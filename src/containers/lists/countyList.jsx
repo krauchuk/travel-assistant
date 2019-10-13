@@ -1,11 +1,36 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import List from '../../components/list';
+import Pagination from '../../containers/pagination';
+import {
+  changePage,
+  fetchCountries,
+} from '../../actions/countries';
 
 class CountyList extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const {
+      pagination,
+      updateCountries,
+    } = this.props;
+    if (prevProps.pagination.currentPage !== pagination.currentPage) {
+      updateCountries(pagination.currentPage);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  changePageFunc = (page) => {
+    const { changeCurrentPage } = this.props;
+    changeCurrentPage(page);
+  }
+
   render() {
     const type = 'country';
-    const { counties, popularCountries } = this.props;
+    const {
+      countries,
+      popularCountries,
+      pagination,
+     } = this.props;
     return (
       <div>
         <span className="header-text">Popular</span>
@@ -17,7 +42,11 @@ class CountyList extends PureComponent {
         <List
           listType={'scroll'}
           entityType={type}
-          entities={counties}
+          entities={countries}
+        />
+        <Pagination
+          values={pagination}
+          changePageFunc={this.changePageFunc}
         />
       </div>
     )
@@ -25,8 +54,18 @@ class CountyList extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  counties: state.countries.countries,
+  countries: state.countries.countries,
   popularCountries: state.countries.popularCountries,
+  pagination: state.countries.pagination,
 });
 
-export default connect(mapStateToProps)(CountyList);
+const mapDispatchToProps = dispatch => ({
+  changeCurrentPage: (page) => {
+    dispatch(changePage(page));
+  },
+  updateCountries: (page) => {
+    dispatch(fetchCountries(page));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CountyList);

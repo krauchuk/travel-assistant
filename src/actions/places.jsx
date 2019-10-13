@@ -7,12 +7,14 @@ import {
   FETCH_PLACE_REQUEST,
   FETCH_PLACE_SUCCESS,
   FETCH_PLACE_FAILURE,
+  PLACES_PAGE_CHANGE,
 } from './actionTypes';
 import {
   fetchRequest,
   fetchSuccess,
   fetchFailure,
 } from './fetchActions';
+import { changeCurrentPage } from './paginationActions';
 
 const fetchPlaces = page => (
   (dispatch) => {
@@ -48,7 +50,14 @@ const fetchPlace = id => (
   }
 );
 
+const changePage = page => (
+  (dispatch) => {
+    dispatch(changeCurrentPage(PLACES_PAGE_CHANGE, page));
+  }
+)
+
 export {
   fetchPlaces,
   fetchPlace,
+  changePage,
 }
