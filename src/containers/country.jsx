@@ -4,6 +4,7 @@ import { fetchCountry } from '../actions/countries';
 import List from '../components/list';
 import '../scss/text.scss';
 import '../scss/entityPage.scss';
+import '../scss/buttons.scss';
 
 class Country extends PureComponent {
   componentDidMount() {
@@ -18,8 +19,9 @@ class Country extends PureComponent {
   }
 
   render() {
-    const { selectedCountry } = this.props;
+    const { selectedCountry, loading } = this.props;
     return (
+      loading ? <div className="loading-text">Loading</div> :
       selectedCountry
         ? <div className="entity-info">
             <span className="entity-page-address">Home > {selectedCountry.name}</span>
@@ -56,8 +58,8 @@ class Country extends PureComponent {
             </div>
           </div>
         : <div>
-            <span>Oops, we did not find the country</span>
-            <button onClick={this.toPreviousPage}>Back</button>
+            <div className="error-message">Oops, we did not find the country</div>
+            <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
           </div>
     )
   }
@@ -65,6 +67,7 @@ class Country extends PureComponent {
 
 const mapStateToProps = state => ({
   selectedCountry: state.countries.selectedCountry,
+  loading: state.countries.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

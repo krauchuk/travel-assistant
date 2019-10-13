@@ -27,10 +27,19 @@
 }
 
 .entity-type {
-  color: gray;
+  color: white;
+  background: gray;
+  padding: 1px 3px;
+  border-radius: 3px;
   font-size: 12px;
 }
 
 .entity-address {
   text-align: center;
+}
+
+.entity-price {
+  background: orange;
+  color: white;
+  float: right;
 }

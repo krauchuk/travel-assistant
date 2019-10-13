@@ -21,3 +21,11 @@
   @extend .pagination-btn;
   background: transparent;
 }
+
+.back-btn {
+  @extend .pagination-btn;
+  margin: auto;
+  font-weight: bold;
+  background: white;
+  display: block;
+}

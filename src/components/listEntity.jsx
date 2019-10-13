@@ -16,7 +16,7 @@ const entity = ({
           <div className="entity-stars">&#9733;{entity.stars}</div>
         </div>
         { entity.info && entity.info.price ?
-            <div className="entity-price">{entity.info.price}</div>
+            <div className="entity-list-price">{entity.info.price}</div>
             : null
         }
       </div>

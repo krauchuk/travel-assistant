@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchPlace } from '../actions/places';
 import '../scss/entityPage.scss';
 import '../scss/text.scss';
+import '../scss/buttons.scss';
 
 class Place extends PureComponent {
   componentDidMount() {
@@ -17,8 +18,9 @@ class Place extends PureComponent {
   }
 
   render() {
-    const { selectedPlace } = this.props;
+    const { selectedPlace, loading } = this.props;
     return (
+      loading ? <div className="loading-text">Loading</div> :
       selectedPlace
         ? <div className="entity-info">
             <span className="entity-page-address">
@@ -30,11 +32,11 @@ class Place extends PureComponent {
             <span className="entity-type">{selectedPlace.type}</span>
             <div className="right-text">&#9733;{selectedPlace.stars}</div>
             <div className="entity-description">{selectedPlace.info.description}</div>
-            <div className="right-text">{selectedPlace.info.price}</div>
+            <div className="entity-price">{selectedPlace.info.price}</div>
           </div>
         : <div>
-            <span>Oops, we did not find the place</span>
-            <button onClick={this.toPreviousPage}>Back</button>
+            <div className="error-message">Oops, we did not find the place</div >
+            <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
           </div>
     )
   }
@@ -42,6 +44,7 @@ class Place extends PureComponent {
 
 const mapStateToProps = state => ({
   selectedPlace: state.places.selectedPlace,
+  loading: state.places.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
