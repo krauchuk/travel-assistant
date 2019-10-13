@@ -8,6 +8,7 @@ import {
   FETCH_CITY_SUCCESS,
   FETCH_CITY_FAILURE,
   CITIES_PAGE_CHANGE,
+  FILTER_CITY_PLACES_CHANGE,
 } from './actionTypes';
 import {
   fetchRequest,
@@ -56,8 +57,18 @@ const changePage = page => (
   }
 )
 
+const changePlacesFilter = placeTypeId => (
+  (dispatch) => {
+    dispatch({
+      type: FILTER_CITY_PLACES_CHANGE,
+      payload: placeTypeId,
+    });
+  }
+)
+
 export {
   fetchCities,
   fetchCity,
   changePage,
+  changePlacesFilter,
 }

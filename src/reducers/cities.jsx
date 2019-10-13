@@ -6,6 +6,7 @@ import {
   FETCH_CITY_SUCCESS,
   FETCH_CITY_FAILURE,
   CITIES_PAGE_CHANGE,
+  FILTER_CITY_PLACES_CHANGE,
 } from '../actions/actionTypes';
 
 const initState = {
@@ -15,6 +16,9 @@ const initState = {
     currentPage: 1,
     hasNext: false,
     hasPrev: false,
+  },
+  filter: {
+    placeTypeId: 0,
   },
   selectedCity: null,
   loading: false,
@@ -61,6 +65,14 @@ export default function(state = initState, action) {
         pagination: {
           ...state.pagination,
           currentPage: action.payload,
+        },
+      };
+    case FILTER_CITY_PLACES_CHANGE:
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          placeTypeId: action.payload,
         },
       };
     default:

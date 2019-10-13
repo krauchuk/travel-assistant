@@ -31,25 +31,27 @@ class CityList extends PureComponent {
       cities,
       popularCities,
       pagination,
+      loading,
      } = this.props;
     return (
-      <div>
-        <span className="header-text">Popular</span>
-        <List
-          listType={'grid'}
-          entityType={type}
-          entities={popularCities}
-        />
-        <List
-          listType={'scroll'}
-          entityType={type}
-          entities={cities}
-        />
-        <Pagination
-          values={pagination}
-          changePageFunc={this.changePageFunc}
-        />
-      </div>
+      loading ? <div className="loading-text">Loading</div> :
+        <div>
+          <span className="header-text">Popular</span>
+          <List
+            listType={'grid'}
+            entityType={type}
+            entities={popularCities}
+          />
+          <List
+            listType={'scroll'}
+            entityType={type}
+            entities={cities}
+          />
+          <Pagination
+            values={pagination}
+            changePageFunc={this.changePageFunc}
+          />
+        </div>
     )
   }
 }
@@ -58,6 +60,7 @@ const mapStateToProps = state => ({
   cities: state.cities.cities,
   popularCities: state.cities.popularCities,
   pagination: state.cities.pagination,
+  loading: state.cities.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

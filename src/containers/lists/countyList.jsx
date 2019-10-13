@@ -6,6 +6,7 @@ import {
   changePage,
   fetchCountries,
 } from '../../actions/countries';
+import '../../scss/text.scss';
 
 class CountyList extends PureComponent {
   componentDidUpdate(prevProps) {
@@ -30,25 +31,27 @@ class CountyList extends PureComponent {
       countries,
       popularCountries,
       pagination,
+      loading,
      } = this.props;
     return (
-      <div>
-        <span className="header-text">Popular</span>
-        <List
-          listType={'grid'}
-          entityType={type}
-          entities={popularCountries}
-        />
-        <List
-          listType={'scroll'}
-          entityType={type}
-          entities={countries}
-        />
-        <Pagination
-          values={pagination}
-          changePageFunc={this.changePageFunc}
-        />
-      </div>
+      loading ? <div className="loading-text">Loading</div> :
+        <div>
+          <span className="header-text">Popular</span>
+          <List
+            listType={'grid'}
+            entityType={type}
+            entities={popularCountries}
+          />
+          <List
+            listType={'scroll'}
+            entityType={type}
+            entities={countries}
+          />
+          <Pagination
+            values={pagination}
+            changePageFunc={this.changePageFunc}
+          />
+        </div>
     )
   }
 }
@@ -57,6 +60,7 @@ const mapStateToProps = state => ({
   countries: state.countries.countries,
   popularCountries: state.countries.popularCountries,
   pagination: state.countries.pagination,
+  loading: state.countries.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -23,7 +23,7 @@ class Country extends PureComponent {
     return (
       loading ? <div className="loading-text">Loading</div> :
       selectedCountry
-        ? <div className="entity-info">
+        ? <div>
             <span className="entity-page-address">Home > {selectedCountry.name}</span>
             <img className="entity-img" src={selectedCountry.pic} />
             <div className="entity-description">{selectedCountry.description}</div>
