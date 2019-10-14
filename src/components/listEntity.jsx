@@ -21,6 +21,10 @@ const entity = ({
        }
         <div className="entity-body">
           <div className="entity-header">{entity.name}</div>
+          { entity.info && entity.info.address ?
+            <div className="entity-list-address">{entity.info.address}</div>
+            : null
+          }
           <div className="entity-stars">&#9733;{entity.stars}</div>
         </div>
         { entity.info && entity.info.price ?

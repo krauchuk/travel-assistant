@@ -35,6 +35,9 @@
     @extend .not-found-text;
     top: 20%;
   }
+  .entity-list-address {
+    display: none;
+  }
 }
 
 .scroll-list-entity {
@@ -68,8 +71,16 @@
     @extend .not-found-text;
     top: 50%;
   }
+  .entity-list-address {
+    font-size: 13px;
+    color: gray;
+  }
   @media (min-width: 768px) and (max-width: 1024px) {
     flex: 45%;
+    margin: 10px;
+  }
+  @media (min-width: 1025px) {
+    flex: 30%;
     margin: 10px;
   }
 }
