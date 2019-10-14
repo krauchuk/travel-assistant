@@ -1,15 +1,22 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withLastLocation } from 'react-router-last-location';
 import { fetchPlace } from '../actions/places';
-import '../scss/entityPage.scss';
+import PlaceInfo from '../components/entity/place';
 import '../scss/text.scss';
-import '../scss/buttons.scss';
 
 class Place extends PureComponent {
   componentDidMount() {
-    const { fetchPlaceById } = this.props;
+    const { lastLocation, fetchPlaceById } = this.props;
     const href = window.location.href;
     const currentId = href.split('/').pop();
+    const path = lastLocation ?
+    lastLocation.pathname.split("/")[1]
+    : null;
+    path
+    if (path === null) {
+      this.toPreviousPage = null;
+    }
     fetchPlaceById(currentId);
   }
 
@@ -18,36 +25,22 @@ class Place extends PureComponent {
   }
 
   render() {
-    const { selectedPlace, loading } = this.props;
+    const {
+      selectedPlace,
+      loading,
+      error,
+    } = this.props;
     return (
-      loading ? <div className="loading-text">Loading</div> :
-      selectedPlace
-        ? <div>
-          <span className="entity-page-address">
-            Home > {selectedPlace.country.name} > {selectedPlace.city.name} > {selectedPlace.name}
-          </span>
-          {selectedPlace.pic ?
-            <img className="entity-img" src={selectedPlace.pic} />
-            : <div className="entity-img-not-found">
-                <span className="entity-img-not-found-text">
-                  {'No photo :('}
-                </span>
-              </div>
-          }
-          <div className="entity-info">
-              <div className="entity-name">{selectedPlace.name}</div>
-              <div className="entity-address">{selectedPlace.info.address}</div>
-              <span className="entity-type">{selectedPlace.type}</span>
-              <div className="right-text">&#9733;{selectedPlace.stars}</div>
-              <div className="entity-description">{selectedPlace.info.description}</div>
-              <div className="entity-price">{selectedPlace.info.price}</div>
-              <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
-            </div>
-          </div>
-        : <div>
-            <div className="error-message">Oops, we did not find the place</div >
-            <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
-          </div>
+      <div>
+        { loading && <div className="loading-text">Loading</div> }
+        { error &&  <Error message={error} goBack={this.toPreviousPage} /> }
+        { selectedPlace &&
+          <PlaceInfo
+            selectedPlace={selectedPlace}
+            canBack={this.toPreviousPage}
+          />
+        }
+      </div>
     )
   }
 }
@@ -55,6 +48,7 @@ class Place extends PureComponent {
 const mapStateToProps = state => ({
   selectedPlace: state.places.selectedPlace,
   loading: state.places.loading,
+  error: state.places.error,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -63,4 +57,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Place);
+export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(Place));

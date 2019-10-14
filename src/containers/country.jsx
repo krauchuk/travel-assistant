@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
 import { fetchCountry } from '../actions/countries';
 import { fetchCity } from '../actions/cities';
-import List from '../components/list';
+import CountryInfo from '../components/entity/country';
+import Error from '../components/system/error';
 import '../scss/text.scss';
-import '../scss/entityPage.scss';
-import '../scss/buttons.scss';
 
 class Country extends PureComponent {
   componentDidMount() {
@@ -41,67 +40,17 @@ class Country extends PureComponent {
       error,
     } = this.props;
     return (
-      error ?
-        <div>
-          <div className="error-message">{error}</div>
-          <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
-        </div>
-      : loading ? <div className="loading-text">Loading</div> :
-      selectedCountry
-        ? <div>
-            <span className="entity-page-address">Home > {selectedCountry.name}</span>
-            {selectedCountry.pic ?
-              <img className="entity-img" src={selectedCountry.pic} />
-              : <div className="entity-img-not-found">
-                  <span className="entity-img-not-found-text">
-                    {'No photo :('}
-                  </span>
-                </div>
-            }
-            <div className="entity-description">{selectedCountry.description}</div>
-            <div>
-            { this.toPreviousPage ?
-                <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
-              : null
-            }
-              { selectedCountry.cities.popular.length ?
-                <div>
-                  <span className="header-text">Popular cities</span>
-                  <List
-                    listType={'grid'}
-                    entityType={'city'}
-                    entities={selectedCountry.cities.popular}
-                    onClickHandle={this.cityClickHandle}
-                  />
-                </div>
-                : null
-              }
-              { selectedCountry.popularPlaces.length ?
-                <div>
-                  <span className="header-text">Popular places</span>
-                  <List
-                    listType={'grid'}
-                    entityType={'place'}
-                    entities={selectedCountry.popularPlaces}
-                  />
-                </div>
-                : null
-              }
-              <List
-                listType={'scroll'}
-                entityType={'city'}
-                entities={selectedCountry.cities.all}
-                onClickHandle={this.cityClickHandle}
-              />
-            </div>
-          </div>
-        : <div>
-            <div className="error-message">Oops, we did not find the country</div>
-            { this.toPreviousPage ?
-                <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
-              : null
-            }
-          </div>
+      <div>
+        { loading && <div className="loading-text">Loading</div> }
+        { error &&  <Error message={error} goBack={this.toPreviousPage} /> }
+        { selectedCountry &&
+          <CountryInfo
+            selectedCountry={selectedCountry}
+            cityClickHandle={this.cityClickHandle}
+            canBack={this.toPreviousPage}
+          />
+        }
+      </div>
     )
   }
 }
