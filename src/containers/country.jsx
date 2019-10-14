@@ -21,6 +21,8 @@ class Country extends PureComponent {
       const currentId = href.split('/').pop();
       fetchCountryById(currentId);
       this.toPreviousPage = null;
+    } else if(path !== 'city') {
+      window.scrollTo(0, 0);
     }
   }
 

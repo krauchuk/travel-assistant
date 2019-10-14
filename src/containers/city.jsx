@@ -24,6 +24,7 @@ class City extends PureComponent {
       this.toPreviousPage = null;
     } else if(path !== 'place') {
       changePlaceType(0);
+      window.scrollTo(0, 0);
     }
   }
 

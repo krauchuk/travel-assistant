@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCountry } from '../actions/countries';
 import { fetchCity } from '../actions/cities';
-import List from '../components/list';
+import PopularGrid from '../components/popularGrid';
 import '../scss/text.scss';
 import '../scss/buttons.scss';
 
@@ -26,32 +26,20 @@ class HomePage extends PureComponent {
     } = this.props;
     return (
       <div>
-        <span className="header-text">
-          Country <span className="header-hot-text">Hot</span>
-        </span>
         <Link to="/country" className="more-btn">More</Link>
-        <List
-          listType={'grid'}
+        <PopularGrid
           entityType={'country'}
           entities={popularCountries}
           onClickHandle={this.countryClickHandle}
         />
-        <span className="header-text">
-          City <span className="header-hot-text">Hot</span>
-        </span>
         <Link to="/city" className="more-btn">More</Link>
-        <List
-          listType={'grid'}
+        <PopularGrid
           entityType={'city'}
           entities={popularCities}
           onClickHandle={this.cityClickHandle}
         />
-        <span className="header-text">
-          Place <span className="header-hot-text">Hot</span>
-        </span>
         <Link to="/place" className="more-btn">More</Link>
-        <List
-          listType={'grid'}
+        <PopularGrid
           entityType={'place'}
           entities={popularPlaces}
         />

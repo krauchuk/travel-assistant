@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../../components/filter';
 import NoPic from '../system/noPic';
 import List from '../../components/list';
+import PopularGrid from '../../components/popularGrid';
 import '../../scss/entityPage.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
@@ -25,14 +26,10 @@ const city = ({
         <button className="back-btn" onClick={canBack}>Back</button>
       }
       { !!selectedCity.places.popular.length &&
-        <div>
-          <span className="header-text">Popular places</span>
-          <List
-            listType={'grid'}
-            entityType={'place'}
-            entities={selectedCity.places.popular}
-          />
-        </div>
+        <PopularGrid
+          entityType={'place'}
+          entities={selectedCity.places.popular}
+        />
       }
       { !!selectedCity.places.all.length &&
         <Filter clickHandle={filterClickHandler} placeTypeId={placeTypeId}/>

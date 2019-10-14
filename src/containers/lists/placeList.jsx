@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
 import List from '../../components/list';
 import Pagination from '../../containers/pagination';
+import PopularGrid from '../../components/popularGrid';
 import {
   changePage,
   fetchPlaces,
@@ -47,9 +48,7 @@ class PlaceList extends PureComponent {
     return (
       loading ? <div className="loading-text">Loading</div> :
         <div>
-          <span className="header-text">Popular</span>
-          <List
-            listType={'grid'}
+          <PopularGrid
             entityType={type}
             entities={popularPlaces}
           />
