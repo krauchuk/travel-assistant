@@ -6,10 +6,11 @@ const entity = ({
   listType,
   entityType,
   entity,
+  onClickHandle,
 }) => (
   <div className={`${listType}-list-entity`}>
     <Link to={`/${entityType}/${entity.id}`}>
-      <div id={entity.id}>
+      <div id={entity.id} onClick={onClickHandle}>
        {entity.pic ?
         <img src={entity.pic} />
         : <div className="image-not-found">

@@ -38,3 +38,8 @@
   flex: 25%;
   text-align: center;
 }
+
+.filter-btn-pressed {
+  @extend .filter-btn;
+  background: #C3A237;
+}

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withLastLocation } from 'react-router-last-location';
 import List from '../../components/list';
 import Pagination from '../../containers/pagination';
 import {
@@ -9,6 +10,16 @@ import {
 import '../../scss/text.scss';
 
 class PlaceList extends PureComponent {
+  componentDidMount() {
+    const { lastLocation, changeCurrentPage } = this.props;
+    const path = lastLocation ?
+      lastLocation.pathname.split("/")[1]
+      : null;
+    if (path !== 'place') {
+      changeCurrentPage(1);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       pagination,
@@ -72,4 +83,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceList);
+export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(PlaceList));

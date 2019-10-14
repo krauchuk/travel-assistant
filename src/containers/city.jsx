@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { fetchCity, changePlacesFilter } from '../actions/cities';
+import { changePlacesFilter } from '../actions/cities';
+import { withLastLocation } from 'react-router-last-location';
+import { fetchCity } from '../actions/cities';
 import List from '../components/list';
 import '../scss/text.scss';
 import '../scss/entityPage.scss';
@@ -9,10 +11,22 @@ import '../scss/filter.scss';
 
 class City extends PureComponent {
   componentDidMount() {
-    const { fetchCityById } = this.props;
-    const href = window.location.href;
-    const currentId = href.split('/').pop();
-    fetchCityById(currentId);
+    const {
+      lastLocation,
+      changePlaceType,
+      fetchCityById,
+     } = this.props;
+    const path = lastLocation ?
+    lastLocation.pathname.split("/")[1]
+    : null;
+    if (path === null) {
+      const href = window.location.href;
+      const currentId = href.split('/').pop();
+      fetchCityById(currentId);
+      this.toPreviousPage = null;
+    } else if(path !== 'place') {
+      changePlaceType(0);
+    }
   }
 
   toPreviousPage() {
@@ -29,9 +43,15 @@ class City extends PureComponent {
       selectedCity,
       placeTypeId,
       loading,
+      error,
      } = this.props;
     return (
-      loading ? <div className="loading-text">Loading</div> :
+      error ?
+        <div>
+          <div className="error-message">{error}</div>
+          <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
+        </div>
+      : loading ? <div className="loading-text">Loading</div> :
       selectedCity
         ? <div>
             <span className="entity-page-address">Home > {selectedCity.country.name} > {selectedCity.name}</span>
@@ -45,7 +65,10 @@ class City extends PureComponent {
             }
             <div className="entity-description">{selectedCity.info.description}</div>
             <div>
-            <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
+            { this.toPreviousPage ?
+                <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
+              : null
+            }
             {selectedCity.places.popular.length ?
               <div>
                 <span className="header-text">Popular places</span>
@@ -59,10 +82,15 @@ class City extends PureComponent {
             }
             {selectedCity.places.all.length ?
               <div className="filter-block">
-                <div className="filter-btn" onClick={() => this.changePlacesTypeId(0)}>All</div>
-                <div className="filter-btn" onClick={() => this.changePlacesTypeId(1)}>Lodging</div>
-                <div className="filter-btn" onClick={() => this.changePlacesTypeId(2)}>Attractions</div>
-                <div className="filter-btn" onClick={() => this.changePlacesTypeId(3)}>Food</div>
+                {
+                  ['All', 'Lodging', 'Attractions', 'Food'].map((txt, index) => (
+                    <div
+                      key={index}
+                      className={'filter-btn' + (placeTypeId === index ? '-pressed' : '')}
+                      onClick={() => this.changePlacesTypeId(index)}
+                    >{txt}</div>
+                  ))
+                  }
               </div>
               : null
             }
@@ -82,7 +110,10 @@ class City extends PureComponent {
           </div>
         : <div>
             <div className="error-message">Oops, we did not find the city</div>
-            <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
+            { this.toPreviousPage ?
+                <button className="back-btn" onClick={this.toPreviousPage}>Back</button>
+              : null
+            }
           </div>
     )
   }
@@ -92,15 +123,16 @@ const mapStateToProps = state => ({
   selectedCity: state.cities.selectedCity,
   loading: state.cities.loading,
   placeTypeId: state.cities.filter.placeTypeId,
+  error: state.cities.error,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCityById: (id) => {
-    dispatch(fetchCity(id));
-  },
   changePlaceType: (type) => {
     dispatch(changePlacesFilter(type));
   },
+  fetchCityById: (id) => {
+    dispatch(fetchCity(id));
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(City);
+export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(City));

@@ -1,14 +1,26 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withLastLocation } from 'react-router-last-location';
 import List from '../../components/list';
 import Pagination from '../../containers/pagination';
 import {
   changePage,
   fetchCountries,
+  fetchCountry,
 } from '../../actions/countries';
 import '../../scss/text.scss';
 
 class CountyList extends PureComponent {
+  componentDidMount() {
+    const { lastLocation, changeCurrentPage } = this.props;
+    const path = lastLocation ?
+      lastLocation.pathname.split("/")[1]
+      : null;
+    if (path !== 'country') {
+      changeCurrentPage(1);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       pagination,
@@ -23,6 +35,11 @@ class CountyList extends PureComponent {
   changePageFunc = (page) => {
     const { changeCurrentPage } = this.props;
     changeCurrentPage(page);
+  }
+
+  countryClickHandle = (e) => {
+    const { fetchCountryById } =this.props;
+    fetchCountryById(e.currentTarget.id);
   }
 
   render() {
@@ -41,11 +58,13 @@ class CountyList extends PureComponent {
             listType={'grid'}
             entityType={type}
             entities={popularCountries}
+            onClickHandle={this.countryClickHandle}
           />
           <List
             listType={'scroll'}
             entityType={type}
             entities={countries}
+            onClickHandle={this.countryClickHandle}
           />
           <Pagination
             values={pagination}
@@ -70,6 +89,9 @@ const mapDispatchToProps = dispatch => ({
   updateCountries: (page) => {
     dispatch(fetchCountries(page));
   },
+  fetchCountryById: (id) => {
+    dispatch(fetchCountry(id));
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CountyList);
+export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(CountyList));

@@ -6,6 +6,7 @@ const list = ({
   listType,
   entityType,
   entities,
+  onClickHandle,
 }) => (
   <div className={`${listType}-list`}>
     {entities.map(entity => (
@@ -14,6 +15,7 @@ const list = ({
         listType={listType}
         entityType={entityType}
         entity={entity}
+        onClickHandle={onClickHandle}
       />
     ))}
   </div>

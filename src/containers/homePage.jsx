@@ -1,11 +1,23 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchCountry } from '../actions/countries';
+import { fetchCity } from '../actions/cities';
 import List from '../components/list';
 import '../scss/text.scss';
 import '../scss/buttons.scss';
 
 class HomePage extends PureComponent {
+  countryClickHandle = (e) => {
+    const { fetchCountryById } =this.props;
+    fetchCountryById(e.currentTarget.id);
+  }
+
+  cityClickHandle = (e) => {
+    const { fetchCityById } =this.props;
+    fetchCityById(e.currentTarget.id);
+  }
+
   render() {
     const {
       popularCountries,
@@ -22,6 +34,7 @@ class HomePage extends PureComponent {
           listType={'grid'}
           entityType={'country'}
           entities={popularCountries}
+          onClickHandle={this.countryClickHandle}
         />
         <span className="header-text">
           City <span className="header-hot-text">Hot</span>
@@ -31,6 +44,7 @@ class HomePage extends PureComponent {
           listType={'grid'}
           entityType={'city'}
           entities={popularCities}
+          onClickHandle={this.cityClickHandle}
         />
         <span className="header-text">
           Place <span className="header-hot-text">Hot</span>
@@ -52,4 +66,13 @@ const mapStateToProps = state => ({
   popularPlaces: state.places.popularPlaces,
 });
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = dispatch => ({
+  fetchCountryById: (id) => {
+    dispatch(fetchCountry(id));
+  },
+  fetchCityById: (id) => {
+    dispatch(fetchCity(id));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
