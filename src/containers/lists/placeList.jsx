@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
 import List from '../../components/list';
-import Pagination from '../../containers/pagination';
+import Pagination from '../../components/pagination';
 import PopularGrid from '../../components/popularGrid';
 import {
   changePage,
@@ -59,7 +59,7 @@ class PlaceList extends PureComponent {
           />
           <Pagination
             values={pagination}
-            changePageFunc={this.changePageFunc}
+            clickHandle={this.changePageFunc}
           />
         </div>
     )

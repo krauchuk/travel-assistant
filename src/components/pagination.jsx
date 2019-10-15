@@ -3,26 +3,24 @@ import '../scss/pagination.scss';
 import '../scss/buttons.scss';
 
 const pagination = ({
-  currentPage,
-  hasNext,
-  hasPrev,
+  values,
   clickHandle,
 }) => (
   <div className="pagination-bar">
     <button type="button"
       value="prev"
-      className={hasPrev ? 'pagination-btn-enabled' : 'pagination-btn-disabled'}
-      onClick={clickHandle}
-      disabled={!hasPrev}
+      className={values.hasPrev ? 'pagination-btn-enabled' : 'pagination-btn-disabled'}
+      onClick={() => clickHandle(values.currentPage - 1)}
+      disabled={!values.hasPrev}
     >
       {'<'}
     </button>
-    <span className="page-number">{currentPage}</span>
+    <span className="page-number">{values.currentPage}</span>
     <button type="button"
       value="next"
-      className={hasNext ? 'pagination-btn-enabled' : 'pagination-btn-disabled'}
-      onClick={clickHandle}
-      disabled={!hasNext}
+      className={values.hasNext ? 'pagination-btn-enabled' : 'pagination-btn-disabled'}
+      onClick={() => clickHandle(values.currentPage + 1)}
+      disabled={!values.hasNext}
     >
       {'>'}
     </button>
