@@ -16,7 +16,7 @@ const country = ({
     { selectedCountry.pic ?
       <img className="entity-img" src={selectedCountry.pic} />
       :
-      <NoPic />
+      <NoPic type={'entity'} />
     }
     <div className="entity-description">{selectedCountry.description}</div>
     <div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NoPic from './system/noPic';
 import '../scss/listEntity.scss';
 
 const entity = ({
@@ -11,14 +12,7 @@ const entity = ({
   <div className={`${listType}-list-entity`}>
     <Link to={`/${entityType}/${entity.id}`}>
       <div id={entity.id} onClick={onClickHandle}>
-       {entity.pic ?
-        <img src={entity.pic} />
-        : <div className="image-not-found">
-          <span className="image-not-found-text">
-            {'No photo :('}
-          </span>
-        </div>
-       }
+       { entity.pic ? <img className={`${listType}-list-img`} src={entity.pic} /> : <NoPic type={listType} /> }
         <div className="entity-body">
           <div className="entity-header">{entity.name}</div>
           { entity.info && entity.info.address ?

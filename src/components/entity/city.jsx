@@ -18,7 +18,7 @@ const city = ({
     { selectedCity.pic ?
       <img className="entity-img" src={selectedCity.pic} />
       :
-      <NoPic />
+      <NoPic type={'entity'} />
     }
     <div className="entity-description">{selectedCity.info.description}</div>
     <div>

@@ -1,0 +1,44 @@
+@import './entityPage.scss';
+@import './listEntity.scss';
+$background-color: gray;
+$text-color: white;
+
+.entity-img-not-found {
+  @extend .entity-img;
+  margin: 10px 0px;
+  background: $background-color;
+  height: 250px;
+  text-align: center;
+  .img-not-found-text {
+    color: $text-color;
+    position: relative;
+    font-weight: bold;
+    top: 50%;
+  }
+}
+
+.scroll-img-not-found {
+  @extend .scroll-list-img;
+  background: $background-color;
+  text-align: center;
+  .img-not-found-text {
+    color: $text-color;
+    position: relative;
+    font-weight: bold;
+    top: 50%;
+  }
+}
+
+.grid-img-not-found {
+  @extend .grid-list-img;
+  background: $background-color;
+  .img-not-found-text {
+    color: $text-color;
+    position: absolute;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    top: 20%;
+    left: 0;
+  }
+}

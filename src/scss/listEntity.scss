@@ -1,15 +1,9 @@
-.not-found-text {
-  color: white;
-  position: relative;
-  font-weight: bold;
-}
-
 .grid-list-entity {
   width: 30%;
   display: inline-block;
   position: relative;
   margin: 3px;
-  img {
+  .grid-list-img {
     border-radius: 5px;
     display: block;
     width: 100%;
@@ -26,15 +20,6 @@
     text-align: center;
     bottom: 25px;
   }
-  .image-not-found {
-    @extend img;
-    background: gray;
-    text-align: center;
-  }
-  .image-not-found-text {
-    @extend .not-found-text;
-    top: 20%;
-  }
   .entity-list-address {
     display: none;
   }
@@ -45,7 +30,7 @@
   background: white;
   margin: 20px 0px;
   position: relative;
-  img {
+  .scroll-list-img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 100%;
@@ -61,15 +46,6 @@
   }
   .entity-price {
     padding: 10px;
-  }
-  .image-not-found {
-    @extend img;
-    background: gray;
-    text-align: center;
-  }
-  .image-not-found-text {
-    @extend .not-found-text;
-    top: 50%;
   }
   .entity-list-address {
     font-size: 13px;
