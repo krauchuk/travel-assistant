@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
-import List from '../../components/list';
+import List from '../../components/list/list';
 import Pagination from '../../components/pagination';
-import PopularGrid from '../../components/popularGrid';
+import PopularGrid from '../../components/list/popularEntityGrid';
 import {
   changePage,
   fetchCities,

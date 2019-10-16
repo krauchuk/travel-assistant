@@ -1,8 +1,8 @@
 import React from 'react';
 import List from './list';
-import '../scss/text.scss';
+import '../../scss/text.scss';
 
-const popularGrid = ({
+const PopularEntityGrid = ({
   entityType,
   entities,
   onClickHandle,
@@ -20,4 +20,4 @@ const popularGrid = ({
   </div>
 );
 
-export default popularGrid;
+export default PopularEntityGrid;

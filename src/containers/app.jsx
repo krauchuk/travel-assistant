@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/header';
-import MainRouter from '../components/mainRouter';
+import MainRouter from '../components/system/MainRouter';
 import Navigation from '../components/navigation';
 import { fetchCountries } from '../actions/countries';
 import { fetchCities } from '../actions/cities';

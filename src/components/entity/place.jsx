@@ -4,7 +4,7 @@ import '../../scss/entityPage.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
-const city = ({
+const Place = ({
   selectedPlace,
   canBack,
  }) => (
@@ -31,4 +31,4 @@ const city = ({
   </div>
 );
 
-export default city;
+export default Place;

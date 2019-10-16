@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../scss/image.scss';
 
-const noPic = ({ type }) => (
+const NoPic = ({ type }) => (
   <div className={`${type}-img-not-found`}>
     <span className="img-not-found-text">
       {'No photo :('}
@@ -9,4 +9,4 @@ const noPic = ({ type }) => (
   </div>
 );
 
-export default noPic;
+export default NoPic;

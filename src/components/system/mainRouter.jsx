@@ -1,14 +1,14 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import HomePage from '../containers/homePage';
-import CountriesPage from '../containers/lists/countyList';
-import CountryPage from '../containers/country';
-import CitiesPage from '../containers/lists/cityList';
-import CityPage from '../containers/city';
-import PlacesPage from '../containers/lists/placeList';
-import PlacePage from '../containers/place';
+import HomePage from '../../containers/homePage';
+import CountriesPage from '../../containers/lists/countryList';
+import CountryPage from '../../containers/entity/country';
+import CitiesPage from '../../containers/lists/cityList';
+import CityPage from '../../containers/entity/city';
+import PlacesPage from '../../containers/lists/placeList';
+import PlacePage from '../../containers/entity/place';
 
-const router = () => (
+const Router = () => (
   <div>
     <Switch>
       <Route exact path="/" component={HomePage} />
@@ -22,4 +22,4 @@ const router = () => (
   </div>
 );
 
-export default router;
+export default Router;

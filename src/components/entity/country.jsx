@@ -1,12 +1,12 @@
 import React from 'react';
 import NoPic from '../system/noPic';
-import List from '../../components/list';
-import PopularGrid from '../popularGrid';
+import List from '../list/list';
+import PopularGrid from '../list/popularEntityGrid';
 import '../../scss/entityPage.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
-const country = ({
+const Country = ({
   selectedCountry,
   cityClickHandle,
   canBack,
@@ -46,4 +46,4 @@ const country = ({
   </div>
 );
 
-export default country;
+export default Country;

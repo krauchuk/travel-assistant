@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { changePlacesFilter } from '../actions/cities';
+import { changePlacesFilter } from '../../actions/cities';
 import { withLastLocation } from 'react-router-last-location';
-import { fetchCity } from '../actions/cities';
-import CityInfo from '../components/entity/city';
-import Error from '../components/system/error';
-import '../scss/text.scss';
+import { fetchCity } from '../../actions/cities';
+import CityInfo from '../../components/entity/city';
+import Error from '../../components/system/error';
+import '../../scss/text.scss';
 
 class City extends PureComponent {
   componentDidMount() {

@@ -2,21 +2,21 @@ import React from 'react';
 import '../scss/buttons.scss';
 import '../scss/filter.scss';
 
-const filter = ({
+const Filter = ({
+  types,
+  selectedEntityTypeId,
   clickHandle,
-  placeTypeId,
 }) => (
   <div className="filter-block">
-  {
-    ['All', 'Lodging', 'Attractions', 'Food'].map((txt, index) => (
+  { types.map(type => (
       <div
-        key={index}
-        className={'filter-btn' + (placeTypeId === index ? '-pressed' : '')}
-        onClick={() => clickHandle(index)}
-      >{txt}</div>
+        key={type.id}
+        className={'filter-btn' + (type.id === selectedEntityTypeId ? '-pressed' : '')}
+        onClick={() => clickHandle(type.id)}
+      >{type.name}</div>
     ))
-    }
+  }
 </div>
 );
 
-export default filter;
+export default Filter;

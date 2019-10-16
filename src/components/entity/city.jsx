@@ -1,13 +1,13 @@
 import React from 'react';
 import Filter from '../../components/filter';
 import NoPic from '../system/noPic';
-import List from '../../components/list';
-import PopularGrid from '../../components/popularGrid';
+import List from '../list/list';
+import PopularGrid from '../list/popularEntityGrid';
 import '../../scss/entityPage.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
-const city = ({
+const City = ({
   selectedCity,
   placeTypeId,
   filterClickHandler,
@@ -31,8 +31,12 @@ const city = ({
           entities={selectedCity.places.popular}
         />
       }
-      { !!selectedCity.places.all.length &&
-        <Filter clickHandle={filterClickHandler} placeTypeId={placeTypeId}/>
+      { !!selectedCity.places.types.length &&
+        <Filter
+          clickHandle={filterClickHandler}
+          selectedEntityTypeId={placeTypeId}
+          types={selectedCity.places.types}
+        />
       }
       <List
         listType={'scroll'}
@@ -50,4 +54,4 @@ const city = ({
   </div>
 );
 
-export default city;
+export default City;

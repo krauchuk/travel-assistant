@@ -1,8 +1,8 @@
 import React from 'react';
 import ListEntity from './listEntity';
-import '../scss/list.scss';
+import '../../scss/list.scss';
 
-const list = ({
+const List = ({
   listType,
   entityType,
   entities,
@@ -21,4 +21,4 @@ const list = ({
   </div>
 );
 
-export default list;
+export default List;

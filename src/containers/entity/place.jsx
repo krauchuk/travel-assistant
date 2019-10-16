@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
-import { fetchPlace } from '../actions/places';
-import PlaceInfo from '../components/entity/place';
-import '../scss/text.scss';
+import { fetchPlace } from '../../actions/places';
+import PlaceInfo from '../../components/entity/place';
+import '../../scss/text.scss';
 
 class Place extends PureComponent {
   componentDidMount() {

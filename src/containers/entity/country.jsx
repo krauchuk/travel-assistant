@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
-import { fetchCountry } from '../actions/countries';
-import { fetchCity } from '../actions/cities';
-import CountryInfo from '../components/entity/country';
-import Error from '../components/system/error';
-import '../scss/text.scss';
+import { fetchCountry } from '../../actions/countries';
+import { fetchCity } from '../../actions/cities';
+import CountryInfo from '../../components/entity/country';
+import Error from '../../components/system/error';
+import '../../scss/text.scss';
 
 class Country extends PureComponent {
   componentDidMount() {

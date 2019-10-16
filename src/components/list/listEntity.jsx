@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NoPic from './system/noPic';
-import '../scss/listEntity.scss';
+import NoPic from '../system/noPic';
+import '../../scss/listEntity.scss';
 
-const entity = ({
+const ListEntity = ({
   listType,
   entityType,
   entity,
@@ -30,4 +30,4 @@ const entity = ({
   </div>
 );
 
-export default entity;
+export default ListEntity;

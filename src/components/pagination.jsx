@@ -2,7 +2,7 @@ import React from 'react';
 import '../scss/pagination.scss';
 import '../scss/buttons.scss';
 
-const pagination = ({
+const Pagination = ({
   values,
   clickHandle,
 }) => (
@@ -27,4 +27,4 @@ const pagination = ({
   </div>
 );
 
-export default pagination;
+export default Pagination;

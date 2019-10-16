@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../scss/navigation.scss';
 
-const navigation = () => (
+const Navigation = () => (
   <nav className="navigation">
     <span className="navigation-btn">
       <Link to="/">Home</Link>
@@ -19,4 +19,4 @@ const navigation = () => (
   </nav>
 );
 
-export default navigation;
+export default Navigation;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchCountry } from '../actions/countries';
 import { fetchCity } from '../actions/cities';
-import PopularGrid from '../components/popularGrid';
+import PopularGrid from '../components/list/popularEntityGrid';
 import '../scss/text.scss';
 import '../scss/buttons.scss';
 

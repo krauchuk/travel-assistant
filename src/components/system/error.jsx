@@ -2,7 +2,7 @@ import React from 'react';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
-const error = ({
+const Error = ({
   message,
   goBack,
 }) => (
@@ -12,4 +12,4 @@ const error = ({
   </div>
 );
 
-export default error;
+export default Error;
