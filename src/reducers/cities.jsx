@@ -5,18 +5,13 @@ import {
   FETCH_CITY_REQUEST,
   FETCH_CITY_SUCCESS,
   FETCH_CITY_FAILURE,
-  CITIES_PAGE_CHANGE,
   FILTER_CITY_PLACES_CHANGE,
 } from '../actions/actionTypes';
 
 const initState = {
   cities: [],
   popularCities: [],
-  pagination: {
-    currentPage: 1,
-    hasNext: false,
-    hasPrev: false,
-  },
+  pagination: null,
   filter: {
     placeTypeId: 0,
   },
@@ -25,8 +20,8 @@ const initState = {
   error: null,
 };
 
-export default function(state = initState, action) {
-  switch(action.type) {
+export default function (state = initState, action) {
+  switch (action.type) {
     case FETCH_CITIES_REQUEST:
     case FETCH_CITY_REQUEST:
       return {
@@ -40,11 +35,7 @@ export default function(state = initState, action) {
         loading: false,
         cities: action.payload.all,
         popularCities: action.payload.popular,
-        pagination: {
-          currentPage: action.payload.pagination.currentPage,
-          hasNext: action.payload.pagination.hasNext,
-          hasPrev: action.payload.pagination.hasPrev,
-        },
+        pagination: action.payload.pagination,
       };
     case FETCH_CITIES_FAILURE:
     case FETCH_CITY_FAILURE:
@@ -59,14 +50,6 @@ export default function(state = initState, action) {
         loading: false,
         selectedCity: action.payload,
       };
-    case CITIES_PAGE_CHANGE:
-      return {
-        ...state,
-        pagination: {
-          ...state.pagination,
-          currentPage: action.payload,
-        },
-      };
     case FILTER_CITY_PLACES_CHANGE:
       return {
         ...state,
@@ -78,4 +61,4 @@ export default function(state = initState, action) {
     default:
       return state;
   }
-};
+}

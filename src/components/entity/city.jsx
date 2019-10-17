@@ -1,57 +1,64 @@
 import React from 'react';
-import Filter from '../../components/filter';
-import NoPic from '../system/noPic';
-import List from '../list/list';
-import PopularGrid from '../list/popularEntityGrid';
-import '../../scss/entityPage.scss';
+import PropTypes from 'prop-types';
+import appPropTypes from '../../propTypes';
+import Filter from '../filter';
+import NoPic from '../common/noPic';
+import Destinations from '../destinations';
+import Popular from '../destinations/popular';
+import '../../scss/entity.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
 const City = ({
-  selectedCity,
+  city,
   placeTypeId,
   filterClickHandler,
-  canBack,
- }) => (
+  goBack,
+}) => (
   <div>
-    <span className="entity-page-address">Home > {selectedCity.country.name} > {selectedCity.name}</span>
-    { selectedCity.pic ?
-      <img className="entity-img" src={selectedCity.pic} />
-      :
-      <NoPic type={'entity'} />
-    }
-    <div className="entity-description">{selectedCity.info.description}</div>
+    <span className="entity__path">
+      {`Home > ${city.country.name} > ${city.name}`}
+    </span>
+    { city.pic ?
+      <img alt="city pic" className="entity__img" src={city.pic} />
+      : <NoPic type="entity" /> }
+    <div className="entity__description">{city.info.description}</div>
     <div>
-      { canBack &&
-        <button className="back-btn" onClick={canBack}>Back</button>
-      }
-      { !!selectedCity.places.popular.length &&
-        <PopularGrid
-          entityType={'place'}
-          entities={selectedCity.places.popular}
-        />
-      }
-      { !!selectedCity.places.types.length &&
+      { goBack && <button className="btn" onClick={goBack} type="button">Back</button> }
+      { city.popularPlaces &&
+        <Popular
+          destinationsType="place"
+          destinations={city.popularPlaces}
+        /> }
+      { city.placesTypes &&
         <Filter
           clickHandle={filterClickHandler}
           selectedEntityTypeId={placeTypeId}
-          types={selectedCity.places.types}
-        />
-      }
-      <List
-        listType={'scroll'}
-        entityType={'place'}
-        entities={selectedCity.places.all
-          .filter(place => {
-            if(placeTypeId === 0) {
-              return place;
-            }
-            return place.typeId === placeTypeId;
-          })
-        }
+          types={city.placesTypes}
+        /> }
+      <Destinations
+        listType="scroll"
+        destinationsType="place"
+        destinations={city.places.filter((place) => {
+          if (placeTypeId === 0) {
+            return place;
+          }
+          return place.typeId === placeTypeId;
+        })}
       />
     </div>
   </div>
 );
+
+City.propTypes = {
+  city: appPropTypes.city.isRequired,
+  placeTypeId: PropTypes.number.isRequired,
+  filterClickHandler: PropTypes.func.isRequired,
+  goBack: PropTypes.func,
+};
+
+City.defaultProps = {
+  goBack: null,
+};
 
 export default City;

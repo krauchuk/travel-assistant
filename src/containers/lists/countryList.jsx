@@ -1,45 +1,36 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
-import List from '../../components/list/list';
-import Pagination from '../../components/pagination';
-import PopularGrid from '../../components/list/popularEntityGrid';
+import PropTypes from 'prop-types';
+import appPropTypes from '../../propTypes';
+import Destinations from '../../components/destinations';
+import Pagination from '../../components/common/pagination';
+import Popular from '../../components/destinations/popular';
+import Error from '../../components/common/error';
+import Loading from '../../components/common/loading';
 import {
-  changePage,
   fetchCountries,
   fetchCountry,
 } from '../../actions/countries';
 import '../../scss/text.scss';
 
-class CountyList extends PureComponent {
+class CountryList extends PureComponent {
   componentDidMount() {
-    const { lastLocation, changeCurrentPage } = this.props;
-    const path = lastLocation ?
-      lastLocation.pathname.split("/")[1]
-      : null;
+    const { lastLocation, updateCountries } = this.props;
+    const path = lastLocation && lastLocation.pathname.split('/')[1];
     if (path !== 'country') {
-      changeCurrentPage(1);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      pagination,
-      updateCountries,
-    } = this.props;
-    if (prevProps.pagination.currentPage !== pagination.currentPage) {
-      updateCountries(pagination.currentPage);
-      window.scrollTo(0, 0);
+      updateCountries(1);
     }
   }
 
   changePageFunc = (page) => {
-    const { changeCurrentPage } = this.props;
-    changeCurrentPage(page);
+    const { updateCountries } = this.props;
+    updateCountries(page);
+    window.scrollTo(0, 0);
   }
 
   countryClickHandle = (e) => {
-    const { fetchCountryById } =this.props;
+    const { fetchCountryById } = this.props;
     fetchCountryById(e.currentTarget.id);
   }
 
@@ -50,41 +41,41 @@ class CountyList extends PureComponent {
       popularCountries,
       pagination,
       loading,
-     } = this.props;
+      error,
+    } = this.props;
     return (
-      loading ? <div className="loading-text">Loading</div> :
-        <div>
-          <PopularGrid
-            entityType={type}
-            entities={popularCountries}
-            onClickHandle={this.countryClickHandle}
-          />
-          <List
-            listType={'scroll'}
-            entityType={type}
-            entities={countries}
-            onClickHandle={this.countryClickHandle}
-          />
-          <Pagination
-            values={pagination}
-            clickHandle={this.changePageFunc}
-          />
-        </div>
-    )
+      <div>
+        { loading && <Loading /> }
+        { error && <Error message={error} goBack={this.toPreviousPage} /> }
+        <Popular
+          destinationsType={type}
+          destinations={popularCountries}
+          onClickHandle={this.countryClickHandle}
+        />
+        <Destinations
+          listType="scroll"
+          destinationsType={type}
+          destinations={countries}
+          onClickHandle={this.countryClickHandle}
+        />
+        <Pagination
+          values={pagination || undefined}
+          clickHandle={this.changePageFunc}
+        />
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   countries: state.countries.countries,
   popularCountries: state.countries.popularCountries,
   pagination: state.countries.pagination,
   loading: state.countries.loading,
+  error: state.countries.error,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeCurrentPage: (page) => {
-    dispatch(changePage(page));
-  },
+const mapDispatchToProps = (dispatch) => ({
   updateCountries: (page) => {
     dispatch(fetchCountries(page));
   },
@@ -93,4 +84,21 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(CountyList));
+CountryList.propTypes = {
+  lastLocation: appPropTypes.location,
+  countries: appPropTypes.countries.isRequired,
+  popularCountries: appPropTypes.countries.isRequired,
+  updateCountries: PropTypes.func.isRequired,
+  fetchCountryById: PropTypes.func.isRequired,
+  pagination: appPropTypes.pagination,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+};
+
+CountryList.defaultProps = {
+  pagination: null,
+  lastLocation: null,
+  error: null,
+};
+
+export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(CountryList));

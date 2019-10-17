@@ -7,68 +7,51 @@ import {
   FETCH_CITY_REQUEST,
   FETCH_CITY_SUCCESS,
   FETCH_CITY_FAILURE,
-  CITIES_PAGE_CHANGE,
   FILTER_CITY_PLACES_CHANGE,
 } from './actionTypes';
-import {
-  fetchRequest,
-  fetchSuccess,
-  fetchFailure,
-} from './fetchActions';
-import { changeCurrentPage } from './paginationActions';
 
-const fetchCities = page => (
+const fetchCities = (page) => (
   (dispatch) => {
     const url = `${server}/city`;
-    dispatch(fetchRequest(FETCH_CITIES_REQUEST));
+    dispatch({ type: FETCH_CITIES_REQUEST });
     return axios.get(
-      url,{
+      url, {
         params: {
           page,
         },
       },
-      )
+    )
       .then((response) => {
-        dispatch(fetchSuccess(FETCH_CITIES_SUCCESS, response.data));
+        dispatch({ type: FETCH_CITIES_SUCCESS, payload: response.data });
       })
       .catch((error) => {
-        dispatch(fetchFailure(FETCH_CITIES_FAILURE, error.message));
+        dispatch({ type: FETCH_CITIES_FAILURE, payload: error.message });
       });
   }
 );
 
-const fetchCity = id => (
+const fetchCity = (id) => (
   (dispatch) => {
     const url = `${server}/city/${id}`;
-    dispatch(fetchRequest(FETCH_CITY_REQUEST));
+    dispatch({ type: FETCH_CITY_REQUEST });
     return axios.get(url)
       .then((response) => {
-        dispatch(fetchSuccess(FETCH_CITY_SUCCESS, response.data));
+        dispatch({ type: FETCH_CITY_SUCCESS, payload: response.data });
       })
       .catch((error) => {
-        dispatch(fetchFailure(FETCH_CITY_FAILURE, error.message));
+        dispatch({ type: FETCH_CITY_FAILURE, payload: error.message });
       });
   }
 );
 
-const changePage = page => (
+const changePlacesFilter = (placeTypeId) => (
   (dispatch) => {
-    dispatch(changeCurrentPage(CITIES_PAGE_CHANGE, page));
+    dispatch({ type: FILTER_CITY_PLACES_CHANGE, payload: placeTypeId });
   }
-)
-
-const changePlacesFilter = placeTypeId => (
-  (dispatch) => {
-    dispatch({
-      type: FILTER_CITY_PLACES_CHANGE,
-      payload: placeTypeId,
-    });
-  }
-)
+);
 
 export {
   fetchCities,
   fetchCity,
-  changePage,
   changePlacesFilter,
-}
+};

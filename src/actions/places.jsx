@@ -7,57 +7,43 @@ import {
   FETCH_PLACE_REQUEST,
   FETCH_PLACE_SUCCESS,
   FETCH_PLACE_FAILURE,
-  PLACES_PAGE_CHANGE,
 } from './actionTypes';
-import {
-  fetchRequest,
-  fetchSuccess,
-  fetchFailure,
-} from './fetchActions';
-import { changeCurrentPage } from './paginationActions';
 
-const fetchPlaces = page => (
+const fetchPlaces = (page) => (
   (dispatch) => {
     const url = `${server}/place`;
-    dispatch(fetchRequest(FETCH_PLACES_REQUEST));
+    dispatch({ type: FETCH_PLACES_REQUEST });
     return axios.get(
       url, {
         params: {
           page,
         },
       },
-      )
+    )
       .then((response) => {
-        dispatch(fetchSuccess(FETCH_PLACES_SUCCESS, response.data));
+        dispatch({ type: FETCH_PLACES_SUCCESS, payload: response.data });
       })
       .catch((error) => {
-        dispatch(fetchFailure(FETCH_PLACES_FAILURE, error.message));
+        dispatch({ type: FETCH_PLACES_FAILURE, payload: error.message });
       });
   }
 );
 
-const fetchPlace = id => (
+const fetchPlace = (id) => (
   (dispatch) => {
     const url = `${server}/place/${id}`;
-    dispatch(fetchRequest(FETCH_PLACE_REQUEST));
+    dispatch({ type: FETCH_PLACE_REQUEST });
     return axios.get(url)
       .then((response) => {
-        dispatch(fetchSuccess(FETCH_PLACE_SUCCESS, response.data));
+        dispatch({ type: FETCH_PLACE_SUCCESS, payload: response.data });
       })
       .catch((error) => {
-        dispatch(fetchFailure(FETCH_PLACE_FAILURE, error.message));
+        dispatch({ type: FETCH_PLACE_FAILURE, payload: error.message });
       });
   }
 );
-
-const changePage = page => (
-  (dispatch) => {
-    dispatch(changeCurrentPage(PLACES_PAGE_CHANGE, page));
-  }
-)
 
 export {
   fetchPlaces,
   fetchPlace,
-  changePage,
-}
+};

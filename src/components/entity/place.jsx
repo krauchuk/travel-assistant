@@ -1,34 +1,44 @@
 import React from 'react';
-import NoPic from '../system/noPic';
-import '../../scss/entityPage.scss';
+import PropTypes from 'prop-types';
+import appPropTypes from '../../propTypes';
+import NoPic from '../common/noPic';
+import '../../scss/entity.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
 const Place = ({
-  selectedPlace,
-  canBack,
- }) => (
+  place,
+  goBack,
+}) => (
   <div>
-    <span className="entity-page-address">
-      Home > {selectedPlace.country.name} > {selectedPlace.city.name} > {selectedPlace.name}
+    <span className="entity__path">
+      {`Home > ${place.country.name} > ${place.city.name} > ${place.name}`}
     </span>
-    { selectedPlace.pic ?
-      <img className="entity-img" src={selectedPlace.pic} />
-      :
-      <NoPic type={'entity'} />
-    }
-    <div className="entity-info">
-        <div className="entity-name">{selectedPlace.name}</div>
-        <div className="entity-address">{selectedPlace.info.address}</div>
-        <span className="entity-type">{selectedPlace.type}</span>
-        <div className="right-text">&#9733;{selectedPlace.stars}</div>
-        <div className="entity-description">{selectedPlace.info.description}</div>
-        <div className="entity-price">{selectedPlace.info.price}</div>
-        { canBack &&
-          <button className="back-btn" onClick={canBack}>Back</button>
-        }
+    { place.pic ?
+      <img alt="place img" className="entity__img" src={place.pic} />
+      : <NoPic type="entity" /> }
+    <div className="entity__info">
+      <div className="entity__name">{place.name}</div>
+      <div className="entity__address">{place.info.address}</div>
+      <span className="entity__type">{place.type}</span>
+      <div className="entity__stars">
+        &#9733;
+        {place.stars}
       </div>
+      <div className="entity__description">{place.info.description}</div>
+      <div className="entity__price">{place.info.price}</div>
+      { goBack && <button className="btn" onClick={goBack} type="button">Back</button> }
+    </div>
   </div>
 );
+
+Place.propTypes = {
+  place: appPropTypes.place.isRequired,
+  goBack: PropTypes.func,
+};
+
+Place.defaultProps = {
+  goBack: null,
+};
 
 export default Place;

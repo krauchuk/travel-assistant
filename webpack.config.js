@@ -1,6 +1,6 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
-const miniCssPlugin = require('mini-css-extract-plugin');
+const MiniCssPlugin = require('mini-css-extract-plugin');
 
 const config = {
   entry: {
@@ -34,13 +34,19 @@ const config = {
       },
       {
         test: /\.jsx?$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        use: 'eslint-loader',
+      },
+      {
+        test: /\.jsx?$/,
         use: 'babel-loader',
       },
       {
         test: /\.scss/,
         exclude: /node_modules/,
         use: [
-          miniCssPlugin.loader,
+          MiniCssPlugin.loader,
           'css-loader',
           'sass-loader',
         ],
@@ -54,7 +60,7 @@ const config = {
         NODE_ENV: JSON.stringify('development'),
       },
     }),
-    new miniCssPlugin({
+    new MiniCssPlugin({
       filename: '[name].css',
     }),
   ],

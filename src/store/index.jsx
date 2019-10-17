@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import reducer from '../reducers';
 
 /* eslint-disable no-underscore-dangle */
-const composeEnhancers = process.env.NODE_ENV !== 'production'
-  && typeof window === 'object'
-  && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+const composeEnhancers = process.env.NODE_ENV !== 'production' &&
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
     name: 'Travel-assistant',
   }) : compose;

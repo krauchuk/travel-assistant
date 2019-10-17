@@ -7,57 +7,43 @@ import {
   FETCH_COUNTRY_REQUEST,
   FETCH_COUNTRY_SUCCESS,
   FETCH_COUNTRY_FAILURE,
-  COUNTRIES_PAGE_CHANGE,
 } from './actionTypes';
-import {
-  fetchRequest,
-  fetchSuccess,
-  fetchFailure,
-} from './fetchActions';
-import { changeCurrentPage } from './paginationActions';
 
-const fetchCountries = page => (
+const fetchCountries = (page) => (
   (dispatch) => {
     const url = `${server}/country`;
-    dispatch(fetchRequest(FETCH_COUNTRIES_REQUEST));
+    dispatch({ type: FETCH_COUNTRIES_REQUEST });
     return axios.get(
       url, {
         params: {
           page,
         },
       },
-      )
+    )
       .then((response) => {
-        dispatch(fetchSuccess(FETCH_COUNTRIES_SUCCESS, response.data));
+        dispatch({ type: FETCH_COUNTRIES_SUCCESS, payload: response.data });
       })
       .catch((error) => {
-        dispatch(fetchFailure(FETCH_COUNTRIES_FAILURE, error.message));
+        dispatch({ type: FETCH_COUNTRIES_FAILURE, payload: error.message });
       });
   }
 );
 
-const fetchCountry = id => (
+const fetchCountry = (id) => (
   (dispatch) => {
     const url = `${server}/country/${id}`;
-    dispatch(fetchRequest(FETCH_COUNTRY_REQUEST));
+    dispatch({ type: FETCH_COUNTRY_REQUEST });
     return axios.get(url)
       .then((response) => {
-        dispatch(fetchSuccess(FETCH_COUNTRY_SUCCESS, response.data));
+        dispatch({ type: FETCH_COUNTRY_SUCCESS, payload: response.data });
       })
       .catch((error) => {
-        dispatch(fetchFailure(FETCH_COUNTRY_FAILURE, error.message));
+        dispatch({ type: FETCH_COUNTRY_FAILURE, payload: error.message });
       });
   }
 );
-
-const changePage = page => (
-  (dispatch) => {
-    dispatch(changeCurrentPage(COUNTRIES_PAGE_CHANGE, page));
-  }
-)
 
 export {
   fetchCountries,
   fetchCountry,
-  changePage,
-}
+};

@@ -1,0 +1,20 @@
+.error {
+  margin: 10px;
+}
+
+.error__message {
+  color: #FF4500;
+  text-align: center;
+}
+
+.error__btn {
+  width: 40%;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  outline: none;
+  margin: auto;
+  font-weight: bold;
+  background: white;
+  display: block;
+}

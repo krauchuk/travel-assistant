@@ -1,49 +1,57 @@
 import React from 'react';
-import NoPic from '../system/noPic';
-import List from '../list/list';
-import PopularGrid from '../list/popularEntityGrid';
-import '../../scss/entityPage.scss';
+import PropTypes from 'prop-types';
+import appPropTypes from '../../propTypes';
+import NoPic from '../common/noPic';
+import Destinations from '../destinations';
+import Popular from '../destinations/popular';
+import '../../scss/entity.scss';
 import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
 const Country = ({
-  selectedCountry,
+  country,
   cityClickHandle,
-  canBack,
- }) => (
+  goBack,
+}) => (
   <div>
-    <span className="entity-page-address">Home > {selectedCountry.name}</span>
-    { selectedCountry.pic ?
-      <img className="entity-img" src={selectedCountry.pic} />
-      :
-      <NoPic type={'entity'} />
-    }
-    <div className="entity-description">{selectedCountry.description}</div>
+    <span className="entity__path">
+      {`Home > ${country.name}`}
+    </span>
+    { country.pic ?
+      <img alt="country pic" className="entity__img" src={country.pic} />
+      : <NoPic type="entity" /> }
+    <div className="entity__description">{country.info.description}</div>
     <div>
-      { canBack &&
-        <button className="back-btn" onClick={canBack}>Back</button>
-      }
-      { !!selectedCountry.cities.popular.length &&
-        <PopularGrid
-          entityType={'city'}
-          entities={selectedCountry.cities.popular}
+      { goBack && <button className="btn" onClick={goBack} type="button">Back</button> }
+      { country.popularCities &&
+        <Popular
+          destinationsType="city"
+          destinations={country.popularCities}
           onClickHandle={cityClickHandle}
-        />
-      }
-      { !!selectedCountry.popularPlaces.length &&
-        <PopularGrid
-          entityType={'place'}
-          entities={selectedCountry.popularPlaces}
-        />
-      }
-      <List
-        listType={'scroll'}
-        entityType={'city'}
-        entities={selectedCountry.cities.all}
+        /> }
+      { country.popularPlaces &&
+        <Popular
+          destinationsType="place"
+          destinations={country.popularPlaces}
+        /> }
+      <Destinations
+        listType="scroll"
+        destinationsType="city"
+        destinations={country.cities}
         onClickHandle={cityClickHandle}
       />
     </div>
   </div>
 );
+
+Country.propTypes = {
+  country: appPropTypes.country.isRequired,
+  cityClickHandle: PropTypes.func.isRequired,
+  goBack: PropTypes.func,
+};
+
+Country.defaultProps = {
+  goBack: null,
+};
 
 export default Country;

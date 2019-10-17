@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { changePlacesFilter } from '../../actions/cities';
 import { withLastLocation } from 'react-router-last-location';
-import { fetchCity } from '../../actions/cities';
+import PropTypes from 'prop-types';
+import appPropTypes from '../../propTypes';
+import { changePlacesFilter, fetchCity } from '../../actions/cities';
 import CityInfo from '../../components/entity/city';
-import Error from '../../components/system/error';
+import Error from '../../components/common/error';
 import '../../scss/text.scss';
 
 class City extends PureComponent {
@@ -13,28 +14,28 @@ class City extends PureComponent {
       lastLocation,
       changePlaceType,
       fetchCityById,
-     } = this.props;
+    } = this.props;
     const path = lastLocation ?
-    lastLocation.pathname.split("/")[1]
-    : null;
+      lastLocation.pathname.split('/')[1]
+      : null;
     if (path === null) {
       const href = window.location.href;
       const currentId = href.split('/').pop();
       fetchCityById(currentId);
       this.toPreviousPage = null;
-    } else if(path !== 'place') {
+    } else if (path !== 'place') {
       changePlaceType(0);
       window.scrollTo(0, 0);
     }
   }
 
-  toPreviousPage() {
-    window.history.back();
-  }
-
-  changePlacesTypeId = id => {
+  changePlacesTypeId = (id) => {
     const { changePlaceType } = this.props;
     changePlaceType(id);
+  }
+
+  toPreviousPage = () => {
+    window.history.back();
   }
 
   render() {
@@ -43,32 +44,31 @@ class City extends PureComponent {
       placeTypeId,
       loading,
       error,
-     } = this.props;
+    } = this.props;
     return (
       <div>
         { loading && <div className="loading-text">Loading</div> }
-        { error &&  <Error message={error} goBack={this.toPreviousPage} /> }
+        { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedCity &&
           <CityInfo
-            canBack={this.toPreviousPage}
-            selectedCity={selectedCity}
+            goBack={this.toPreviousPage}
+            city={selectedCity}
             filterClickHandler={this.changePlacesTypeId}
             placeTypeId={placeTypeId}
-          />
-        }
+          /> }
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedCity: state.cities.selectedCity,
   loading: state.cities.loading,
   placeTypeId: state.cities.filter.placeTypeId,
   error: state.cities.error,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   changePlaceType: (type) => {
     dispatch(changePlacesFilter(type));
   },
@@ -76,5 +76,21 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchCity(id));
   },
 });
+
+City.propTypes = {
+  lastLocation: appPropTypes.location,
+  changePlaceType: PropTypes.func.isRequired,
+  fetchCityById: PropTypes.func.isRequired,
+  selectedCity: appPropTypes.city,
+  placeTypeId: PropTypes.number.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+};
+
+City.defaultProps = {
+  lastLocation: null,
+  selectedCity: null,
+  error: null,
+};
 
 export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(City));

@@ -1,36 +1,22 @@
-.more-btn {
-  color: gray;
-  padding-right: 10px;
-  float: right;
-}
-
-.pagination-btn {
+.btn {
   width: 40%;
   border: none;
   border-radius: 5px;
   height: 50px;
   outline: none;
-}
-
-.pagination-btn-enabled {
-  @extend .pagination-btn;
-  background: white;
-}
-
-.pagination-btn-disabled {
-  @extend .pagination-btn;
-  background: transparent;
-}
-
-.back-btn {
-  @extend .pagination-btn;
   margin: auto;
   font-weight: bold;
   background: white;
   display: block;
 }
 
-.filter-btn {
+.more-btn {
+  color: gray;
+  padding-right: 10px;
+  float: right;
+}
+
+.filter-block__btn {
   border-radius: 5px;
   padding: 10px 0px;
   background: #EEC643;
@@ -39,7 +25,7 @@
   text-align: center;
 }
 
-.filter-btn-pressed {
-  @extend .filter-btn;
+.filter-block__btn--pressed {
+  @extend .filter-block__btn;
   background: #C3A237;
 }

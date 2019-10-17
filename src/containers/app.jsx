@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/header';
-import MainRouter from '../components/system/MainRouter';
+import MainRouter from '../mainRouter';
 import Navigation from '../components/navigation';
 import { fetchCountries } from '../actions/countries';
 import { fetchCities } from '../actions/cities';
@@ -25,12 +26,16 @@ class App extends PureComponent {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   fetchAllData: (page) => {
     dispatch(fetchCountries(page));
     dispatch(fetchCities(page));
     dispatch(fetchPlaces(page));
   },
 });
+
+App.propTypes = {
+  fetchAllData: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(App);

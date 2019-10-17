@@ -4,16 +4,16 @@ import '../scss/navigation.scss';
 
 const Navigation = () => (
   <nav className="navigation">
-    <span className="navigation-btn">
+    <span className="navigation__link">
       <Link to="/">Home</Link>
     </span>
-    <span className="navigation-btn">
+    <span className="navigation__link">
       <Link to="/country">Countries</Link>
     </span>
-    <span className="navigation-btn">
+    <span className="navigation__link">
       <Link to="/city">Cities</Link>
     </span>
-    <span className="navigation-btn">
+    <span className="navigation__link">
       <Link to="/place">Places</Link>
     </span>
   </nav>

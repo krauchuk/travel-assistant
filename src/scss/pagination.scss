@@ -3,6 +3,24 @@
   text-align: center;
 }
 
-.page-number {
+.pagination-bar__page-number {
   margin: 0px 10px;
+}
+
+.pagination-bar__btn {
+  width: 40%;
+  border: none;
+  border-radius: 5px;
+  height: 50px;
+  outline: none;
+}
+
+.pagination-bar__btn--enabled {
+  @extend .pagination-bar__btn;
+  background: white;
+}
+
+.pagination-bar__btn--disabled {
+  @extend .pagination-bar__btn;
+  background: transparent;
 }

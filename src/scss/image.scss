@@ -1,15 +1,15 @@
-@import './entityPage.scss';
-@import './listEntity.scss';
+@import './entity.scss';
+@import './destination.scss';
 $background-color: gray;
 $text-color: white;
 
-.entity-img-not-found {
-  @extend .entity-img;
+.entity__img--not-found {
+  @extend .entity__img;
   margin: 10px 0px;
   background: $background-color;
   height: 250px;
   text-align: center;
-  .img-not-found-text {
+  .img__text--not-found {
     color: $text-color;
     position: relative;
     font-weight: bold;
@@ -17,11 +17,11 @@ $text-color: white;
   }
 }
 
-.scroll-img-not-found {
-  @extend .scroll-list-img;
+.scroll-list__img--not-found {
+  @extend .scroll-list__img;
   background: $background-color;
   text-align: center;
-  .img-not-found-text {
+  .img__text--not-found {
     color: $text-color;
     position: relative;
     font-weight: bold;
@@ -29,10 +29,10 @@ $text-color: white;
   }
 }
 
-.grid-img-not-found {
-  @extend .grid-list-img;
+.grid-list__img--not-found {
+  @extend .grid-list__img;
   background: $background-color;
-  .img-not-found-text {
+  .img__text--not-found {
     color: $text-color;
     position: absolute;
     font-weight: bold;

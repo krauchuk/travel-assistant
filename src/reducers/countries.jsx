@@ -5,24 +5,19 @@ import {
   FETCH_COUNTRY_REQUEST,
   FETCH_COUNTRY_SUCCESS,
   FETCH_COUNTRY_FAILURE,
-  COUNTRIES_PAGE_CHANGE,
 } from '../actions/actionTypes';
 
 const initState = {
   countries: [],
   popularCountries: [],
-  pagination: {
-    currentPage: 1,
-    hasNext: false,
-    hasPrev: false,
-  },
+  pagination: null,
   selectedCountry: null,
   loading: false,
   error: null,
 };
 
-export default function(state = initState, action) {
-  switch(action.type) {
+export default function (state = initState, action) {
+  switch (action.type) {
     case FETCH_COUNTRIES_REQUEST:
     case FETCH_COUNTRY_REQUEST:
       return {
@@ -36,11 +31,7 @@ export default function(state = initState, action) {
         loading: false,
         countries: action.payload.all,
         popularCountries: action.payload.popular,
-        pagination: {
-          currentPage: action.payload.pagination.currentPage,
-          hasNext: action.payload.pagination.hasNext,
-          hasPrev: action.payload.pagination.hasPrev,
-        },
+        pagination: action.payload.pagination,
       };
     case FETCH_COUNTRIES_FAILURE:
     case FETCH_COUNTRY_FAILURE:
@@ -55,15 +46,7 @@ export default function(state = initState, action) {
         loading: false,
         selectedCountry: action.payload,
       };
-    case COUNTRIES_PAGE_CHANGE:
-      return {
-        ...state,
-        pagination: {
-          ...state.pagination,
-          currentPage: action.payload,
-        },
-      };
     default:
       return state;
   }
-};
+}

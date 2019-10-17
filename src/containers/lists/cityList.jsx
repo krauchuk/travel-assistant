@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
-import List from '../../components/list/list';
-import Pagination from '../../components/pagination';
-import PopularGrid from '../../components/list/popularEntityGrid';
+import PropTypes from 'prop-types';
+import appPropTypes from '../../propTypes';
+import Destinations from '../../components/destinations';
+import Pagination from '../../components/common/pagination';
+import Popular from '../../components/destinations/popular';
+import Error from '../../components/common/error';
+import Loading from '../../components/common/loading';
 import {
-  changePage,
   fetchCities,
   fetchCity,
 } from '../../actions/cities';
@@ -13,33 +16,21 @@ import '../../scss/text.scss';
 
 class CityList extends PureComponent {
   componentDidMount() {
-    const { lastLocation, changeCurrentPage } = this.props;
-    const path = lastLocation ?
-      lastLocation.pathname.split("/")[1]
-      : null;
+    const { lastLocation, updateCities } = this.props;
+    const path = lastLocation && lastLocation.pathname.split('/')[1];
     if (path !== 'city') {
-      changeCurrentPage(1);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      pagination,
-      updateCities,
-    } = this.props;
-    if (prevProps.pagination.currentPage !== pagination.currentPage) {
-      updateCities(pagination.currentPage);
-      window.scrollTo(0, 0);
+      updateCities(1);
     }
   }
 
   changePageFunc = (page) => {
-    const { changeCurrentPage } = this.props;
-    changeCurrentPage(page);
+    const { updateCities } = this.props;
+    updateCities(page);
+    window.scrollTo(0, 0);
   }
 
   cityClickHandle = (e) => {
-    const { fetchCityById } =this.props;
+    const { fetchCityById } = this.props;
     fetchCityById(e.currentTarget.id);
   }
 
@@ -50,41 +41,41 @@ class CityList extends PureComponent {
       popularCities,
       pagination,
       loading,
-     } = this.props;
+      error,
+    } = this.props;
     return (
-      loading ? <div className="loading-text">Loading</div> :
-        <div>
-          <PopularGrid
-            entityType={type}
-            entities={popularCities}
-            onClickHandle={this.cityClickHandle}
-          />
-          <List
-            listType={'scroll'}
-            entityType={type}
-            entities={cities}
-            onClickHandle={this.cityClickHandle}
-          />
-          <Pagination
-            values={pagination}
-            clickHandle={this.changePageFunc}
-          />
-        </div>
-    )
+      <div>
+        { loading && <Loading /> }
+        { error && <Error message={error} goBack={this.toPreviousPage} /> }
+        <Popular
+          destinationsType={type}
+          destinations={popularCities}
+          onClickHandle={this.cityClickHandle}
+        />
+        <Destinations
+          listType="scroll"
+          destinationsType={type}
+          destinations={cities}
+          onClickHandle={this.cityClickHandle}
+        />
+        <Pagination
+          values={pagination || undefined}
+          clickHandle={this.changePageFunc}
+        />
+      </div>
+    );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cities: state.cities.cities,
   popularCities: state.cities.popularCities,
   pagination: state.cities.pagination,
   loading: state.cities.loading,
+  error: state.cities.error,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeCurrentPage: (page) => {
-    dispatch(changePage(page));
-  },
+const mapDispatchToProps = (dispatch) => ({
   updateCities: (page) => {
     dispatch(fetchCities(page));
   },
@@ -92,5 +83,22 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchCity(id));
   },
 });
+
+CityList.propTypes = {
+  lastLocation: appPropTypes.location,
+  fetchCityById: PropTypes.func.isRequired,
+  updateCities: PropTypes.func.isRequired,
+  cities: appPropTypes.cities.isRequired,
+  popularCities: appPropTypes.cities.isRequired,
+  pagination: appPropTypes.pagination,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+};
+
+CityList.defaultProps = {
+  pagination: null,
+  lastLocation: null,
+  error: null,
+};
 
 export default withLastLocation(connect(mapStateToProps, mapDispatchToProps)(CityList));
