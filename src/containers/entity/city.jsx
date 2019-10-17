@@ -6,6 +6,7 @@ import appPropTypes from '../../propTypes';
 import { changePlacesFilter, fetchCity } from '../../actions/cities';
 import CityInfo from '../../components/entity/city';
 import Error from '../../components/common/error';
+import Loading from '../../components/common/loading';
 import '../../scss/text.scss';
 
 class City extends PureComponent {
@@ -47,7 +48,7 @@ class City extends PureComponent {
     } = this.props;
     return (
       <div>
-        { loading && <div className="loading-text">Loading</div> }
+        { loading && <Loading /> }
         { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedCity &&
           <CityInfo

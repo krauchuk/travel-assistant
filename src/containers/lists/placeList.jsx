@@ -43,19 +43,21 @@ class PlaceList extends PureComponent {
       <div>
         { loading && <Loading /> }
         { error && <Error message={error} goBack={this.toPreviousPage} /> }
-        <Popular
-          destinationsType={type}
-          destinations={popularPlaces}
-        />
+        { !!popularPlaces.length &&
+          <Popular
+            destinationsType={type}
+            destinations={popularPlaces}
+          />}
         <Destinations
           listType="scroll"
           destinationsType={type}
           destinations={places}
         />
-        <Pagination
-          values={pagination || undefined}
-          clickHandle={this.changePageFunc}
-        />
+        { pagination &&
+          <Pagination
+            values={pagination || undefined}
+            clickHandle={this.changePageFunc}
+          />}
       </div>
     );
   }

@@ -6,6 +6,7 @@ import appPropTypes from '../../propTypes';
 import { fetchPlace } from '../../actions/places';
 import PlaceInfo from '../../components/entity/place';
 import Error from '../../components/common/error';
+import Loading from '../../components/common/loading';
 import '../../scss/text.scss';
 
 class Place extends PureComponent {
@@ -34,7 +35,7 @@ class Place extends PureComponent {
     } = this.props;
     return (
       <div>
-        { loading && <div className="loading-text">Loading</div> }
+        { loading && <Loading /> }
         { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedPlace &&
           <PlaceInfo

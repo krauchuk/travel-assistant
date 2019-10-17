@@ -9,13 +9,17 @@ const Error = ({
 }) => (
   <div className="error">
     <div className="error__message">{message}</div>
-    <button className="btn" onClick={goBack} type="button">Back</button>
+    {goBack && <button className="btn" onClick={goBack} type="button">Back</button>}
   </div>
 );
 
 Error.propTypes = {
   message: PropTypes.string.isRequired,
-  goBack: PropTypes.func.isRequired,
+  goBack: PropTypes.func,
+};
+
+Error.defaultProps = {
+  goBack: null,
 };
 
 export default Error;

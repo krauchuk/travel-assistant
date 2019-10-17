@@ -7,6 +7,7 @@ import { fetchCountry } from '../../actions/countries';
 import { fetchCity } from '../../actions/cities';
 import CountryInfo from '../../components/entity/country';
 import Error from '../../components/common/error';
+import Loading from '../../components/common/loading';
 import '../../scss/text.scss';
 
 class Country extends PureComponent {
@@ -45,7 +46,7 @@ class Country extends PureComponent {
     } = this.props;
     return (
       <div>
-        { loading && <div className="loading-text">Loading</div> }
+        { loading && <Loading /> }
         { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedCountry &&
           <CountryInfo

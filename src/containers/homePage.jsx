@@ -27,23 +27,32 @@ class HomePage extends PureComponent {
     } = this.props;
     return (
       <div>
-        <Link to="/country" className="more-btn">More</Link>
-        <Popular
-          destinationsType="country"
-          destinations={popularCountries}
-          onClickHandle={this.countryClickHandle}
-        />
-        <Link to="/city" className="more-btn">More</Link>
-        <Popular
-          destinationsType="city"
-          destinations={popularCities}
-          onClickHandle={this.cityClickHandle}
-        />
-        <Link to="/place" className="more-btn">More</Link>
-        <Popular
-          destinationsType="place"
-          destinations={popularPlaces}
-        />
+        { !!popularCountries.length &&
+          <div>
+            <Link to="/country" className="more-btn">More</Link>
+            <Popular
+              destinationsType="country"
+              destinations={popularCountries}
+              onClickHandle={this.countryClickHandle}
+            />
+          </div>}
+        { !!popularCities.length &&
+          <div>
+            <Link to="/city" className="more-btn">More</Link>
+            <Popular
+              destinationsType="city"
+              destinations={popularCities}
+              onClickHandle={this.cityClickHandle}
+            />
+          </div>}
+        { !!popularPlaces.length &&
+          <div>
+            <Link to="/place" className="more-btn">More</Link>
+            <Popular
+              destinationsType="place"
+              destinations={popularPlaces}
+            />
+          </div>}
       </div>
     );
   }

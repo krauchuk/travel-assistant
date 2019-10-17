@@ -47,21 +47,23 @@ class CityList extends PureComponent {
       <div>
         { loading && <Loading /> }
         { error && <Error message={error} goBack={this.toPreviousPage} /> }
-        <Popular
-          destinationsType={type}
-          destinations={popularCities}
-          onClickHandle={this.cityClickHandle}
-        />
+        { !!popularCities.length &&
+          <Popular
+            destinationsType={type}
+            destinations={popularCities}
+            onClickHandle={this.cityClickHandle}
+          />}
         <Destinations
           listType="scroll"
           destinationsType={type}
           destinations={cities}
           onClickHandle={this.cityClickHandle}
         />
-        <Pagination
-          values={pagination || undefined}
-          clickHandle={this.changePageFunc}
-        />
+        { pagination &&
+          <Pagination
+            values={pagination || undefined}
+            clickHandle={this.changePageFunc}
+          />}
       </div>
     );
   }

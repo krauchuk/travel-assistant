@@ -47,21 +47,23 @@ class CountryList extends PureComponent {
       <div>
         { loading && <Loading /> }
         { error && <Error message={error} goBack={this.toPreviousPage} /> }
-        <Popular
-          destinationsType={type}
-          destinations={popularCountries}
-          onClickHandle={this.countryClickHandle}
-        />
+        { !!popularCountries.length &&
+          <Popular
+            destinationsType={type}
+            destinations={popularCountries}
+            onClickHandle={this.countryClickHandle}
+          />}
         <Destinations
           listType="scroll"
           destinationsType={type}
           destinations={countries}
           onClickHandle={this.countryClickHandle}
         />
-        <Pagination
-          values={pagination || undefined}
-          clickHandle={this.changePageFunc}
-        />
+        { pagination &&
+          <Pagination
+            values={pagination || undefined}
+            clickHandle={this.changePageFunc}
+          />}
       </div>
     );
   }
