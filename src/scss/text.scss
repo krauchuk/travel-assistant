@@ -2,13 +2,13 @@
   padding: 10px;
   font-weight: bold;
   text-transform: capitalize;
-}
 
-.primary-header__text--hot {
-  font-weight: 100;
-  padding: 1px 3px;
-  background: #9370DB;
-  border-radius: 3px;
-  font-size: 12px;
-  color: white;
+  &--hot {
+    font-weight: 100;
+    padding: 1px 3px;
+    background: #9370DB;
+    border-radius: 3px;
+    font-size: 12px;
+    color: white;
+  }
 }

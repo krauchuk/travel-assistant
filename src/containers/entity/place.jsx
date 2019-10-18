@@ -7,20 +7,15 @@ import { fetchPlace } from '../../actions/places';
 import PlaceInfo from '../../components/entity/place';
 import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
-import '../../scss/text.scss';
 
 class Place extends PureComponent {
   componentDidMount() {
-    const { lastLocation, fetchPlaceById } = this.props;
-    const href = window.location.href;
-    const currentId = href.split('/').pop();
-    const path = lastLocation ?
-      lastLocation.pathname.split('/')[1]
-      : null;
+    const { match, lastLocation, fetchPlaceById } = this.props;
+    const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path === null) {
       this.toPreviousPage = null;
     }
-    fetchPlaceById(currentId);
+    fetchPlaceById(match.params.number);
   }
 
   toPreviousPage = () => {
@@ -33,10 +28,10 @@ class Place extends PureComponent {
       loading,
       error,
     } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
     return (
       <div>
-        { loading && <Loading /> }
-        { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedPlace &&
           <PlaceInfo
             place={selectedPlace}
@@ -49,8 +44,8 @@ class Place extends PureComponent {
 
 const mapStateToProps = (state) => ({
   selectedPlace: state.places.selectedPlace,
-  loading: state.places.loading,
-  error: state.places.error,
+  loading: state.app.loading,
+  error: state.app.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -60,6 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Place.propTypes = {
+  match: PropTypes.shape({ params: PropTypes.object }).isRequired,
   lastLocation: appPropTypes.location,
   fetchPlaceById: PropTypes.func.isRequired,
   selectedPlace: appPropTypes.place,

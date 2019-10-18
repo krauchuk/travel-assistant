@@ -1,6 +1,13 @@
 .loading {
   margin: 10px;
+}
+
+.loading__text {
+  position: absolute;
+  background: white;
+  border-radius: 5px;
+  left: 50%;
+  transform: translateX(-50%);
   font-weight: bold;
   font-size: 50px;
-  text-align: center;
 }

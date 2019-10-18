@@ -7,22 +7,18 @@ import { changePlacesFilter, fetchCity } from '../../actions/cities';
 import CityInfo from '../../components/entity/city';
 import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
-import '../../scss/text.scss';
 
 class City extends PureComponent {
   componentDidMount() {
     const {
+      match,
       lastLocation,
       changePlaceType,
       fetchCityById,
     } = this.props;
-    const path = lastLocation ?
-      lastLocation.pathname.split('/')[1]
-      : null;
+    const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path === null) {
-      const href = window.location.href;
-      const currentId = href.split('/').pop();
-      fetchCityById(currentId);
+      fetchCityById(match.params.number);
       this.toPreviousPage = null;
     } else if (path !== 'place') {
       changePlaceType(0);
@@ -46,10 +42,10 @@ class City extends PureComponent {
       loading,
       error,
     } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
     return (
       <div>
-        { loading && <Loading /> }
-        { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedCity &&
           <CityInfo
             goBack={this.toPreviousPage}
@@ -64,9 +60,9 @@ class City extends PureComponent {
 
 const mapStateToProps = (state) => ({
   selectedCity: state.cities.selectedCity,
-  loading: state.cities.loading,
+  loading: state.app.loading,
   placeTypeId: state.cities.filter.placeTypeId,
-  error: state.cities.error,
+  error: state.app.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -79,6 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 City.propTypes = {
+  match: PropTypes.shape({ params: PropTypes.object }).isRequired,
   lastLocation: appPropTypes.location,
   changePlaceType: PropTypes.func.isRequired,
   fetchCityById: PropTypes.func.isRequired,

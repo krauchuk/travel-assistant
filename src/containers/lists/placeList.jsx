@@ -3,22 +3,17 @@ import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
 import PropTypes from 'prop-types';
 import appPropTypes from '../../propTypes';
-import Destinations from '../../components/destinations';
-import Pagination from '../../components/common/pagination';
-import Popular from '../../components/destinations/popular';
+import List from '../../components/list';
 import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
 import {
   fetchPlaces,
 } from '../../actions/places';
-import '../../scss/text.scss';
 
 class PlaceList extends PureComponent {
   componentDidMount() {
     const { lastLocation, updatePlaces } = this.props;
-    const path = lastLocation ?
-      lastLocation.pathname.split('/')[1]
-      : null;
+    const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path !== 'place') {
       updatePlaces(1);
     }
@@ -31,7 +26,6 @@ class PlaceList extends PureComponent {
   }
 
   render() {
-    const type = 'place';
     const {
       places,
       popularPlaces,
@@ -39,25 +33,17 @@ class PlaceList extends PureComponent {
       loading,
       error,
     } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
     return (
       <div>
-        { loading && <Loading /> }
-        { error && <Error message={error} goBack={this.toPreviousPage} /> }
-        { !!popularPlaces.length &&
-          <Popular
-            destinationsType={type}
-            destinations={popularPlaces}
-          />}
-        <Destinations
-          listType="scroll"
-          destinationsType={type}
+        <List
+          destinationsType="place"
+          popularDestinations={popularPlaces}
           destinations={places}
+          pagination={pagination}
+          paginationClickHandle={this.changePageFunc}
         />
-        { pagination &&
-          <Pagination
-            values={pagination || undefined}
-            clickHandle={this.changePageFunc}
-          />}
       </div>
     );
   }
@@ -67,8 +53,8 @@ const mapStateToProps = (state) => ({
   places: state.places.places,
   popularPlaces: state.places.popularPlaces,
   pagination: state.places.pagination,
-  loading: state.places.loading,
-  error: state.places.error,
+  loading: state.app.loading,
+  error: state.app.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

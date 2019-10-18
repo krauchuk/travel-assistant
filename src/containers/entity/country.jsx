@@ -8,21 +8,17 @@ import { fetchCity } from '../../actions/cities';
 import CountryInfo from '../../components/entity/country';
 import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
-import '../../scss/text.scss';
 
 class Country extends PureComponent {
   componentDidMount() {
     const {
+      match,
       lastLocation,
       fetchCountryById,
     } = this.props;
-    const path = lastLocation ?
-      lastLocation.pathname.split('/')[1]
-      : null;
+    const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path === null) {
-      const href = window.location.href;
-      const currentId = href.split('/').pop();
-      fetchCountryById(currentId);
+      fetchCountryById(match.params.number);
       this.toPreviousPage = null;
     } else if (path !== 'city') {
       window.scrollTo(0, 0);
@@ -44,10 +40,10 @@ class Country extends PureComponent {
       loading,
       error,
     } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
     return (
       <div>
-        { loading && <Loading /> }
-        { error && <Error message={error} goBack={this.toPreviousPage} /> }
         { selectedCountry &&
           <CountryInfo
             country={selectedCountry}
@@ -61,8 +57,8 @@ class Country extends PureComponent {
 
 const mapStateToProps = (state) => ({
   selectedCountry: state.countries.selectedCountry,
-  loading: state.countries.loading,
-  error: state.countries.error,
+  loading: state.app.loading,
+  error: state.app.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -75,6 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Country.propTypes = {
+  match: PropTypes.shape({ params: PropTypes.object }).isRequired,
   lastLocation: appPropTypes.location,
   fetchCityById: PropTypes.func.isRequired,
   fetchCountryById: PropTypes.func.isRequired,

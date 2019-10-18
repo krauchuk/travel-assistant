@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import HomePage from './containers/homePage';
+import HomePage from './containers/home';
 import CountriesPage from './containers/lists/countryList';
 import CountryPage from './containers/entity/country';
 import CitiesPage from './containers/lists/cityList';

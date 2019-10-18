@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
 import PropTypes from 'prop-types';
 import appPropTypes from '../../propTypes';
-import Destinations from '../../components/destinations';
-import Pagination from '../../components/common/pagination';
-import Popular from '../../components/destinations/popular';
+import List from '../../components/list';
 import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
 import {
   fetchCountries,
   fetchCountry,
 } from '../../actions/countries';
-import '../../scss/text.scss';
 
 class CountryList extends PureComponent {
   componentDidMount() {
@@ -35,7 +32,6 @@ class CountryList extends PureComponent {
   }
 
   render() {
-    const type = 'country';
     const {
       countries,
       popularCountries,
@@ -43,27 +39,18 @@ class CountryList extends PureComponent {
       loading,
       error,
     } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
     return (
       <div>
-        { loading && <Loading /> }
-        { error && <Error message={error} goBack={this.toPreviousPage} /> }
-        { !!popularCountries.length &&
-          <Popular
-            destinationsType={type}
-            destinations={popularCountries}
-            onClickHandle={this.countryClickHandle}
-          />}
-        <Destinations
-          listType="scroll"
-          destinationsType={type}
+        <List
+          destinationsType="country"
+          popularDestinations={popularCountries}
           destinations={countries}
-          onClickHandle={this.countryClickHandle}
+          pagination={pagination}
+          destinationClickHandle={this.countryClickHandle}
+          paginationClickHandle={this.changePageFunc}
         />
-        { pagination &&
-          <Pagination
-            values={pagination || undefined}
-            clickHandle={this.changePageFunc}
-          />}
       </div>
     );
   }
@@ -73,8 +60,8 @@ const mapStateToProps = (state) => ({
   countries: state.countries.countries,
   popularCountries: state.countries.popularCountries,
   pagination: state.countries.pagination,
-  loading: state.countries.loading,
-  error: state.countries.error,
+  loading: state.app.loading,
+  error: state.app.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

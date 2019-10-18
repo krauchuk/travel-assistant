@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import { withLastLocation } from 'react-router-last-location';
 import PropTypes from 'prop-types';
 import appPropTypes from '../../propTypes';
-import Destinations from '../../components/destinations';
-import Pagination from '../../components/common/pagination';
-import Popular from '../../components/destinations/popular';
+import List from '../../components/list';
 import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
 import {
   fetchCities,
   fetchCity,
 } from '../../actions/cities';
-import '../../scss/text.scss';
 
 class CityList extends PureComponent {
   componentDidMount() {
@@ -35,7 +32,6 @@ class CityList extends PureComponent {
   }
 
   render() {
-    const type = 'city';
     const {
       cities,
       popularCities,
@@ -43,27 +39,18 @@ class CityList extends PureComponent {
       loading,
       error,
     } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
     return (
       <div>
-        { loading && <Loading /> }
-        { error && <Error message={error} goBack={this.toPreviousPage} /> }
-        { !!popularCities.length &&
-          <Popular
-            destinationsType={type}
-            destinations={popularCities}
-            onClickHandle={this.cityClickHandle}
-          />}
-        <Destinations
-          listType="scroll"
-          destinationsType={type}
+        <List
+          destinationsType="city"
+          popularDestinations={popularCities}
           destinations={cities}
-          onClickHandle={this.cityClickHandle}
+          pagination={pagination}
+          destinationClickHandle={this.cityClickHandle}
+          paginationClickHandle={this.changePageFunc}
         />
-        { pagination &&
-          <Pagination
-            values={pagination || undefined}
-            clickHandle={this.changePageFunc}
-          />}
       </div>
     );
   }
@@ -73,8 +60,8 @@ const mapStateToProps = (state) => ({
   cities: state.cities.cities,
   popularCities: state.cities.popularCities,
   pagination: state.cities.pagination,
-  loading: state.cities.loading,
-  error: state.cities.error,
+  loading: state.app.loading,
+  error: state.app.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

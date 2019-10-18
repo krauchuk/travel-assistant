@@ -13,6 +13,11 @@ export default {
   cities: PropTypes.arrayOf(city),
   place,
   places: PropTypes.arrayOf(place),
+  allPlural: PropTypes.oneOfType([
+    PropTypes.arrayOf(country),
+    PropTypes.arrayOf(city),
+    PropTypes.arrayOf(place),
+  ]),
   destination,
   destinations: PropTypes.arrayOf(destination),
   pagination,

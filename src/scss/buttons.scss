@@ -23,9 +23,8 @@
   font-weight: bold;
   flex: 25%;
   text-align: center;
-}
-
-.filter-block__btn--pressed {
-  @extend .filter-block__btn;
-  background: #C3A237;
+  &--pressed {
+    @extend .filter-block__btn;
+    background: #C3A237;
+  }
 }
