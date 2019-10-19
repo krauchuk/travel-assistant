@@ -1,5 +1,4 @@
 const { resolve } = require('path');
-const webpack = require('webpack');
 const MiniCssPlugin = require('mini-css-extract-plugin');
 
 const config = {
@@ -13,11 +12,9 @@ const config = {
       resolve(__dirname, 'node_modules'),
     ],
   },
-  mode: 'development',
-  devtool: 'source-map',
   output: {
     filename: 'scripts/[name].js',
-    path: resolve(__dirname, 'devel'),
+    path: resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -54,24 +51,10 @@ const config = {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-      },
-    }),
     new MiniCssPlugin({
       filename: '[name].css',
     }),
   ],
-  devServer: {
-    contentBase: resolve(__dirname, 'devel'),
-    publicPath: '/',
-    historyApiFallback: true,
-    port: 8888,
-    inline: true,
-    hot: true,
-  },
 };
 
 module.exports = config;
