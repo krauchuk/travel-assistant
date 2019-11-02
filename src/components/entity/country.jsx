@@ -9,35 +9,45 @@ import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
 const Country = ({
-  country,
+  country: {
+    name,
+    pic,
+    info: {
+      description,
+    },
+    cities,
+    popularCities,
+    popularPlaces,
+  },
   cityClickHandle,
-  goBack,
+  backFunc,
+  canBack,
 }) => (
   <div>
     <span className="entity__path">
-      {`Home > ${country.name}`}
+      {`Home > ${name}`}
     </span>
-    { country.pic ?
-      <img alt="country pic" className="entity__img" src={country.pic} />
+    { pic ?
+      <img alt="country pic" className="entity__img" src={pic} />
       : <NoPic type="entity" /> }
-    <div className="entity__description">{country.info.description}</div>
+    <div className="entity__description">{description}</div>
     <div>
-      { goBack && <button className="btn" onClick={goBack} type="button">Back</button> }
-      { country.popularCities &&
+      { canBack && <button className="btn" onClick={backFunc} type="button">Back</button> }
+      { popularCities &&
         <Popular
           destinationsType="city"
-          destinations={country.popularCities}
+          destinations={popularCities}
           onClickHandle={cityClickHandle}
         /> }
-      { country.popularPlaces &&
+      { popularPlaces &&
         <Popular
           destinationsType="place"
-          destinations={country.popularPlaces}
+          destinations={popularPlaces}
         /> }
       <Destinations
         listType="scroll"
         destinationsType="city"
-        destinations={country.cities}
+        destinations={cities}
         onClickHandle={cityClickHandle}
       />
     </div>
@@ -47,11 +57,8 @@ const Country = ({
 Country.propTypes = {
   country: appPropTypes.country.isRequired,
   cityClickHandle: PropTypes.func.isRequired,
-  goBack: PropTypes.func,
-};
-
-Country.defaultProps = {
-  goBack: null,
+  backFunc: PropTypes.func.isRequired,
+  canBack: PropTypes.bool.isRequired,
 };
 
 export default Country;

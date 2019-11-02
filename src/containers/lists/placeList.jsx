@@ -34,7 +34,7 @@ class PlaceList extends PureComponent {
       error,
     } = this.props;
     if (loading) return <Loading />;
-    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
+    if (error) return <Error message={error} />;
     return (
       <div>
         <List

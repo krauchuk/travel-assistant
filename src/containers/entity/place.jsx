@@ -9,11 +9,16 @@ import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
 
 class Place extends PureComponent {
+  constructor() {
+    super();
+    this.canBack = true;
+  }
+
   componentDidMount() {
     const { match, lastLocation, fetchPlaceById } = this.props;
     const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path === null) {
-      this.toPreviousPage = null;
+      this.canBack = false;
     }
     fetchPlaceById(match.params.number);
   }
@@ -29,13 +34,16 @@ class Place extends PureComponent {
       error,
     } = this.props;
     if (loading) return <Loading />;
-    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
+    if (error) {
+      return <Error message={error} canBack={this.canBack} backFunc={this.toPreviousPage} />;
+    }
     return (
       <div>
         { selectedPlace &&
           <PlaceInfo
             place={selectedPlace}
-            goBack={this.toPreviousPage}
+            backFunc={this.toPreviousPage}
+            canBack={this.canBack}
           />}
       </div>
     );

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import server from '../constants/serverUrl';
+import apollo from '../graphql/client';
+import { places, place } from '../graphql/queries/places';
 import {
   FETCH_PLACES_REQUEST,
   FETCH_PLACES_SUCCESS,
@@ -11,17 +11,10 @@ import {
 
 const fetchPlaces = (page) => (
   (dispatch) => {
-    const url = `${server}/place`;
     dispatch({ type: FETCH_PLACES_REQUEST });
-    return axios.get(
-      url, {
-        params: {
-          page,
-        },
-      },
-    )
+    return apollo.query({ query: places(page) })
       .then((response) => {
-        dispatch({ type: FETCH_PLACES_SUCCESS, payload: response.data });
+        dispatch({ type: FETCH_PLACES_SUCCESS, payload: response.data.places });
       })
       .catch((error) => {
         dispatch({ type: FETCH_PLACES_FAILURE, payload: error.message });
@@ -31,11 +24,10 @@ const fetchPlaces = (page) => (
 
 const fetchPlace = (id) => (
   (dispatch) => {
-    const url = `${server}/place/${id}`;
     dispatch({ type: FETCH_PLACE_REQUEST });
-    return axios.get(url)
+    return apollo.query({ query: place(id) })
       .then((response) => {
-        dispatch({ type: FETCH_PLACE_SUCCESS, payload: response.data });
+        dispatch({ type: FETCH_PLACE_SUCCESS, payload: response.data.place });
       })
       .catch((error) => {
         dispatch({ type: FETCH_PLACE_FAILURE, payload: error.message });

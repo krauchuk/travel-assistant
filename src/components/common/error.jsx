@@ -5,21 +5,24 @@ import '../../scss/buttons.scss';
 
 const Error = ({
   message,
-  goBack,
+  canBack,
+  backFunc,
 }) => (
   <div className="error">
     <div className="error__message">{message}</div>
-    {goBack && <button className="btn" onClick={goBack} type="button">Back</button>}
+    {canBack && <button className="btn" onClick={backFunc} type="button">Back</button>}
   </div>
 );
 
 Error.propTypes = {
   message: PropTypes.string.isRequired,
-  goBack: PropTypes.func,
+  backFunc: PropTypes.func,
+  canBack: PropTypes.bool,
 };
 
 Error.defaultProps = {
-  goBack: null,
+  backFunc: null,
+  canBack: false,
 };
 
 export default Error;

@@ -10,6 +10,11 @@ import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
 
 class Country extends PureComponent {
+  constructor() {
+    super();
+    this.canBack = true;
+  }
+
   componentDidMount() {
     const {
       match,
@@ -19,7 +24,7 @@ class Country extends PureComponent {
     const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path === null) {
       fetchCountryById(match.params.number);
-      this.toPreviousPage = null;
+      this.canBack = false;
     } else if (path !== 'city') {
       window.scrollTo(0, 0);
     }
@@ -41,14 +46,17 @@ class Country extends PureComponent {
       error,
     } = this.props;
     if (loading) return <Loading />;
-    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
+    if (error) {
+      return <Error message={error} canBack={this.canBack} backFunc={this.toPreviousPage} />;
+    }
     return (
       <div>
         { selectedCountry &&
           <CountryInfo
             country={selectedCountry}
             cityClickHandle={this.cityClickHandle}
-            goBack={this.toPreviousPage}
+            backFunc={this.toPreviousPage}
+            canBack={this.canBack}
           />}
       </div>
     );

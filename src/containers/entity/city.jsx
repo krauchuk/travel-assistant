@@ -9,6 +9,11 @@ import Error from '../../components/common/error';
 import Loading from '../../components/common/loading';
 
 class City extends PureComponent {
+  constructor() {
+    super();
+    this.canBack = true;
+  }
+
   componentDidMount() {
     const {
       match,
@@ -19,7 +24,7 @@ class City extends PureComponent {
     const path = lastLocation ? lastLocation.pathname.split('/')[1] : null;
     if (path === null) {
       fetchCityById(match.params.number);
-      this.toPreviousPage = null;
+      this.canBack = false;
     } else if (path !== 'place') {
       changePlaceType(0);
       window.scrollTo(0, 0);
@@ -43,15 +48,18 @@ class City extends PureComponent {
       error,
     } = this.props;
     if (loading) return <Loading />;
-    if (error) return <Error message={error} goBack={this.toPreviousPage} />;
+    if (error) {
+      return <Error message={error} canBack={this.canBack} backFunc={this.toPreviousPage} />;
+    }
     return (
       <div>
         { selectedCity &&
           <CityInfo
-            goBack={this.toPreviousPage}
             city={selectedCity}
             filterClickHandler={this.changePlacesTypeId}
             placeTypeId={placeTypeId}
+            backFunc={this.toPreviousPage}
+            canBack={this.canBack}
           /> }
       </div>
     );

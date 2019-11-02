@@ -4,26 +4,30 @@ import appPropTypes from '../../propTypes';
 import '../../scss/pagination.scss';
 
 const Pagination = ({
-  values,
+  values: {
+    hasPrev,
+    hasNext,
+    currentPage,
+  },
   clickHandle,
 }) => (
   <div className="pagination-bar">
     <button
       type="button"
       value="prev"
-      className={values.hasPrev ? 'pagination-bar__btn--enabled' : 'pagination-bar__btn--disabled'}
-      onClick={() => clickHandle(values.currentPage - 1)}
-      disabled={!values.hasPrev}
+      className={hasPrev ? 'pagination-bar__btn--enabled' : 'pagination-bar__btn--disabled'}
+      onClick={() => clickHandle(currentPage - 1)}
+      disabled={!hasPrev}
     >
       {'<'}
     </button>
-    <span className="pagination-bar__page-number">{values.currentPage}</span>
+    <span className="pagination-bar__page-number">{currentPage}</span>
     <button
       type="button"
       value="next"
-      className={values.hasNext ? 'pagination-bar__btn--enabled' : 'pagination-bar__btn--disabled'}
-      onClick={() => clickHandle(values.currentPage + 1)}
-      disabled={!values.hasNext}
+      className={hasNext ? 'pagination-bar__btn--enabled' : 'pagination-bar__btn--disabled'}
+      onClick={() => clickHandle(currentPage + 1)}
+      disabled={!hasNext}
     >
       {'>'}
     </button>

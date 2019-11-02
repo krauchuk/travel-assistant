@@ -8,24 +8,30 @@ import '../../scss/destination.scss';
 const Destination = ({
   listType,
   destinationType,
-  destination,
+  destination: {
+    id,
+    pic,
+    name,
+    info,
+    stars,
+  },
   onClickHandle,
 }) => (
   <div className={`${listType}-list__entity`}>
-    <Link to={`/${destinationType}/${destination.id}`} id={destination.id} onClick={onClickHandle}>
-      { destination.pic ? <img alt="destination pic" className={`${listType}-list__img`} src={destination.pic} />
+    <Link to={`/${destinationType}/${id}`} id={id} onClick={onClickHandle}>
+      { pic ? <img alt="destination pic" className={`${listType}-list__img`} src={pic} />
         : <NoPic type={listType} /> }
       <div className={`${listType}-list__body`}>
-        <div className={`${listType}-list__header`}>{destination.name}</div>
-        { destination.info.address &&
-          <div className={`${listType}-list__list-address`}>{destination.info.address}</div> }
+        <div className={`${listType}-list__header`}>{name}</div>
+        { info.address &&
+          <div className={`${listType}-list__list-address`}>{info.address}</div> }
         <div className={`${listType}-list__stars`}>
           &#9733;
-          {destination.stars}
+          {stars}
         </div>
       </div>
-      { destination.info.price &&
-        <div className={`${listType}-list__list-price`}>{destination.info.price}</div> }
+      { info.price &&
+        <div className={`${listType}-list__list-price`}>{info.price}</div> }
     </Link>
   </div>
 );

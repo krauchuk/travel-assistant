@@ -1,5 +1,5 @@
-import axios from 'axios';
-import server from '../constants/serverUrl';
+import apollo from '../graphql/client';
+import { countries, country } from '../graphql/queries/countries';
 import {
   FETCH_COUNTRIES_REQUEST,
   FETCH_COUNTRIES_SUCCESS,
@@ -11,17 +11,10 @@ import {
 
 const fetchCountries = (page) => (
   (dispatch) => {
-    const url = `${server}/country`;
     dispatch({ type: FETCH_COUNTRIES_REQUEST });
-    return axios.get(
-      url, {
-        params: {
-          page,
-        },
-      },
-    )
+    return apollo.query({ query: countries(page) })
       .then((response) => {
-        dispatch({ type: FETCH_COUNTRIES_SUCCESS, payload: response.data });
+        dispatch({ type: FETCH_COUNTRIES_SUCCESS, payload: response.data.countries });
       })
       .catch((error) => {
         dispatch({ type: FETCH_COUNTRIES_FAILURE, payload: error.message });
@@ -31,11 +24,10 @@ const fetchCountries = (page) => (
 
 const fetchCountry = (id) => (
   (dispatch) => {
-    const url = `${server}/country/${id}`;
     dispatch({ type: FETCH_COUNTRY_REQUEST });
-    return axios.get(url)
+    return apollo.query({ query: country(id) })
       .then((response) => {
-        dispatch({ type: FETCH_COUNTRY_SUCCESS, payload: response.data });
+        dispatch({ type: FETCH_COUNTRY_SUCCESS, payload: response.data.country });
       })
       .catch((error) => {
         dispatch({ type: FETCH_COUNTRY_FAILURE, payload: error.message });

@@ -7,38 +7,48 @@ import '../../scss/text.scss';
 import '../../scss/buttons.scss';
 
 const Place = ({
-  place,
-  goBack,
+  place: {
+    name,
+    pic,
+    info: {
+      address,
+      description,
+      price,
+    },
+    type,
+    stars,
+    country,
+    city,
+  },
+  backFunc,
+  canBack,
 }) => (
   <div>
     <span className="entity__path">
-      {`Home > ${place.country.name} > ${place.city.name} > ${place.name}`}
+      {`Home > ${country.name} > ${city.name} > ${name}`}
     </span>
-    { place.pic ?
-      <img alt="place img" className="entity__img" src={place.pic} />
+    { pic ?
+      <img alt="place img" className="entity__img" src={pic} />
       : <NoPic type="entity" /> }
     <div className="entity__info">
-      <div className="entity__name">{place.name}</div>
-      <div className="entity__address">{place.info.address}</div>
-      <span className="entity__type">{place.type}</span>
+      <div className="entity__name">{name}</div>
+      <div className="entity__address">{address}</div>
+      <span className="entity__type">{type}</span>
       <div className="entity__stars">
         &#9733;
-        {place.stars}
+        {stars}
       </div>
-      <div className="entity__description">{place.info.description}</div>
-      <div className="entity__price">{place.info.price}</div>
-      { goBack && <button className="btn" onClick={goBack} type="button">Back</button> }
+      <div className="entity__description">{description}</div>
+      <div className="entity__price">{price}</div>
+      { canBack && <button className="btn" onClick={backFunc} type="button">Back</button> }
     </div>
   </div>
 );
 
 Place.propTypes = {
   place: appPropTypes.place.isRequired,
-  goBack: PropTypes.func,
-};
-
-Place.defaultProps = {
-  goBack: null,
+  backFunc: PropTypes.func.isRequired,
+  canBack: PropTypes.bool.isRequired,
 };
 
 export default Place;
