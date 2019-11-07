@@ -1,51 +1,74 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import DestinationList from './destinationList';
+import Loading from './common/loading';
+import Error from './common/error';
 import appPropTypes from '../propTypes';
-import Destinations from './destinations/index';
-import Popular from './destinations/popular';
-import Pagination from './common/pagination';
 
-const List = ({
-  destinationsType,
-  popularDestinations,
-  destinations,
-  pagination,
-  destinationClickHandle,
-  paginationClickHandle,
-}) => (
-  <div>
-    { !!popularDestinations.length &&
-      <Popular
+
+class List extends PureComponent {
+  componentDidMount() {
+    const { lastLocation, updateList, destinationsType } = this.props;
+    const path = lastLocation && lastLocation.pathname.split('/')[1];
+    if (path !== destinationsType) {
+      updateList(1);
+    }
+  }
+
+  changePageFunc = (page) => {
+    const { updateList } = this.props;
+    updateList(page);
+    window.scrollTo(0, 0);
+  }
+
+  destinationClickHandle = (e) => {
+    const { fetchById } = this.props;
+    if (fetchById) {
+      fetchById(e.currentTarget.id);
+    }
+  }
+
+  render() {
+    const {
+      destinationsType,
+      destinations,
+      popularDestinations,
+      pagination,
+      loading,
+      error,
+    } = this.props;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} />;
+    return (
+      <DestinationList
         destinationsType={destinationsType}
-        destinations={popularDestinations}
-        onClickHandle={destinationClickHandle}
-      />}
-    <Destinations
-      listType="scroll"
-      destinationsType={destinationsType}
-      destinations={destinations}
-      onClickHandle={destinationClickHandle}
-    />
-    { pagination &&
-      <Pagination
-        values={pagination || undefined}
-        clickHandle={paginationClickHandle}
-      />}
-  </div>
-);
+        popularDestinations={popularDestinations}
+        destinations={destinations}
+        pagination={pagination}
+        destinationClickHandle={this.destinationClickHandle}
+        paginationClickHandle={this.changePageFunc}
+      />
+    );
+  }
+}
 
 List.propTypes = {
   destinationsType: PropTypes.string.isRequired,
-  popularDestinations: appPropTypes.allPlural.isRequired,
+  lastLocation: appPropTypes.location,
+  fetchById: PropTypes.func,
+  updateList: PropTypes.func.isRequired,
   destinations: appPropTypes.allPlural.isRequired,
+  popularDestinations: appPropTypes.allPlural.isRequired,
   pagination: appPropTypes.pagination,
-  destinationClickHandle: PropTypes.func,
-  paginationClickHandle: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
 };
 
 List.defaultProps = {
+  fetchById: null,
   pagination: null,
-  destinationClickHandle: null,
+  lastLocation: null,
+  error: null,
 };
 
 export default List;

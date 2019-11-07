@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import appPropTypes from '../propTypes';
 import Popular from './destinations/popular';
+import '../scss/buttons.scss';
 
-const Home = ({
+const HomeGrid = ({
   countries,
   cities,
   places,
@@ -41,7 +42,7 @@ const Home = ({
   </div>
 );
 
-Home.propTypes = {
+HomeGrid.propTypes = {
   countries: appPropTypes.countries.isRequired,
   cities: appPropTypes.cities.isRequired,
   places: appPropTypes.places.isRequired,
@@ -49,4 +50,4 @@ Home.propTypes = {
   cityClickHandle: PropTypes.func.isRequired,
 };
 
-export default Home;
+export default HomeGrid;
