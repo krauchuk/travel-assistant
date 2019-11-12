@@ -6,7 +6,7 @@ const config = {
     bundle: './src/index',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: [
       resolve(__dirname, 'src'),
       resolve(__dirname, 'node_modules'),
@@ -30,13 +30,13 @@ const config = {
         ],
       },
       {
-        test: /\.jsx?$/,
+        test: /\.(ts|js)x?$/,
         enforce: 'pre',
         exclude: /node_modules/,
         use: 'eslint-loader',
       },
       {
-        test: /\.jsx?$/,
+        test: /\.(ts|js)x?$/,
         use: 'babel-loader',
       },
       {
