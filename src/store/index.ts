@@ -2,6 +2,12 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducers';
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
+  }
+}
+
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = process.env.NODE_ENV !== 'production' &&
   typeof window === 'object' &&
