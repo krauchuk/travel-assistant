@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import apollo from '../graphql/client';
+import apollo from '../graphql/apolloClient';
 import { countries, country } from '../graphql/queries/countries';
 import * as Actions from './actionTypes';
 import * as Types from '../types';
